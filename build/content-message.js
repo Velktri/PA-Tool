@@ -1,1 +1,1 @@
-browser.runtime.sendMessage({ command: 'SO_window_message', data: '.' })
+browser.runtime.sendMessage({ command: 'ST_WINDOW_MESSAGE', data: '.' })
