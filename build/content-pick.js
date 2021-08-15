@@ -1,6 +1,5 @@
-function readTable() 
+function readTable(tableData) 
 {
-    let tableData = {}
     let table = document.getElementsByTagName('table')[0].children[1]
     let rows = table.getElementsByTagName('tr')
 
@@ -8,9 +7,20 @@ function readTable()
     {
         if (rows[i].childNodes.length !== 0) 
         {
-            tableData = { ...tableData, ...extractRowData(rows[i]) }
+            rowData = extractRowData(rows[i])
+            
+            if (tableData[rowData.stationPair] === undefined)
+            {
+                tableData[rowData.stationPair] = []
+            }
+            
+            tableData[rowData.stationPair].push({ route: rowData.route, status: rowData.status, progress: rowData.progress })
+            console.log(tableData)
+
+            //tableData = { ...tableData, ...extractRowData(rows[i]) }
         }
     }
+    console.log(tableData)
 
     return tableData
 }
@@ -26,7 +36,7 @@ function extractRowData(rowData)
 
     if (status === "RouteCut") { status = "Route Cut" }
 
-    return { [route]: { stationPair, status, progress }}
+    return { route, stationPair, status, progress }
 }
 
 function getNextButton()
