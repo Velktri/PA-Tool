@@ -15,22 +15,6 @@ function readTable(waveData)
             }
 
             waveData[rowData.route].push({ cartName: rowData.cartName, status: rowData.status })
-
-    
-            /*let waveRoutes = waveData[rowData.stageTime]
-    
-            let found = false
-            if (waveRoutes[rowData.route] !== undefined)
-            {
-                waveRoutes[rowData.route].carts.push(rowData.carts)
-                found = true
-            }
-    
-            if (!found)
-            {
-                let temp = {[rowData.route]: { loc: rowData.loc, carts: [rowData.carts] }}
-                waveData[rowData.stageTime] = { ...waveData[rowData.stageTime], ...temp }
-            }*/
         }
     }
 
