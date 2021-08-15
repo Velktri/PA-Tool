@@ -92,9 +92,9 @@ function handleBrowserClicked()
     browser.storage.local.get('ST_UI').then(res => {
         if (res.ST_UI === undefined || res.ST_UI === browser.tabs.TAB_ID_NONE)
         {
-            /*browser.tabs.create({ url: 'UI/index.html' }).then((tab) => {
+            browser.tabs.create({ url: 'UI/index.html' }).then((tab) => {
                 browser.storage.local.set({ ST_UI: tab.id })
-            })*/
+            })
         }
         else
         {
