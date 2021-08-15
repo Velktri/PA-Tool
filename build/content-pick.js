@@ -15,12 +15,8 @@ function readTable(tableData)
             }
             
             tableData[rowData.stationPair].push({ route: rowData.route, status: rowData.status, progress: rowData.progress })
-            console.log(tableData)
-
-            //tableData = { ...tableData, ...extractRowData(rows[i]) }
         }
     }
-    console.log(tableData)
 
     return tableData
 }

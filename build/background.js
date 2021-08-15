@@ -47,8 +47,13 @@ function storeData(data, tabID)
     })
 }
 
-function handleMessages(request, sender, sendResponse) 
+function handleMessages(request, sender, sendResponse)
 {
+    if (request.command === 'ST_STAGE_DATA')
+    {
+        storeData(request.data, 0)
+    }
+
     if (request.command === 'ST_PICK_DATA')
     {
         storeData(request.data, 1)
