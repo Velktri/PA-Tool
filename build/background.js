@@ -17,13 +17,41 @@ function LoadContentTabs()
     })
 }
 
+function storeData(data, tabID)
+{
+    /* Close content tab */
+    browser.storage.local.get("ST_CONTENT_TABS").then((result) => {
+        if (result.ST_CONTENT_TABS[tabID].id !== browser.tabs.TAB_ID_NONE)
+        {
+            browser.tabs.remove(result.ST_CONTENT_TABS[tabID].id)
+            result.ST_CONTENT_TABS[tabID] = browser.tabs.TAB_ID_NONE
+            browser.storage.local.set({ ST_CONTENT_TABS: result.ST_CONTENT_TABS })
+        }
+    })
+
+    /* Store content data */
+    browser.storage.local.get("ST_CONTENT_DATA_SEPERATE").then(result => {
+        result.ST_CONTENT_DATA_SEPERATE[tabID] = data
+        browser.storage.local.set({ ST_CONTENT_DATA_SEPERATE: result.ST_CONTENT_DATA_SEPERATE })
+
+        /*if (Object.keys(result.ST_CONTENT_DATA_SEPERATE[0]).length > 0 && Object.keys(result.ST_CONTENT_DATA_SEPERATE[1]).length > 0)
+        {
+            mergeCartData(result.ST_CONTENT_DATA_SEPERATE[0]).then(cartData => {
+                browser.storage.local.set({ carts: injectPickData(cartData, result.ST_CONTENT_DATA_SEPERATE[1]) })
+                browser.storage.local.set({ ST_CONTENT_DATA_SEPERATE: [{}, {}] })
+                browser.storage.local.get('SO_UI').then((res) => {
+                    browser.tabs.sendMessage(res.SO_UI, { command: 'SO_carts_updated' })
+                })
+            })
+        }*/
+    })
+}
 
 function handleMessages(request, sender, sendResponse) 
 {
     if (request.command === 'ST_PICK_DATA')
     {
-        console.log(request.data)
-        //storeData(request.data, 1)
+        storeData(request.data, 1)
     }
 
     /* Greeting returning from content message script */
@@ -78,4 +106,5 @@ browser.runtime.onMessage.addListener(handleMessages)
 
 /* Storage API */
 browser.storage.local.set({ ST_UI: browser.tabs.TAB_ID_NONE })
+browser.storage.local.set({ ST_CONTENT_DATA_SEPERATE: [{}, {}] })
 browser.storage.local.set({ ST_CONTENT_TABS: [] })
