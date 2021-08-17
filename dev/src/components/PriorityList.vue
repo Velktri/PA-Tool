@@ -1,5 +1,5 @@
 <template>
-    <div class="container is-fluid">
+    <div class="container is-fluid priority-css">
         <div class="block">
             <ListContainer  v-for="(route, i) in setActiveRouteList()" 
                             :key="i"
@@ -41,7 +41,6 @@ export default {
             let InProgressRoutes = this.$store.getters.getInProgressRoutes
             if (InProgressRoutes !== undefined)
             {
-                console.log(InProgressRoutes)
                 let sortedRoutes = []
 
                 Object.keys(InProgressRoutes).forEach((pairKey) => {
@@ -70,5 +69,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.priority-css {
+    height:100vh;
+    overflow:auto;
+}
 </style>
