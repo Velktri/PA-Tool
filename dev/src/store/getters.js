@@ -16,7 +16,11 @@ const getters = {
     },
 
     getRoutesFromStation: state => {
-        return state.stationPairData[state.selectedStationDetails]
+        return state.stationPairData[state.selectedStationPair]
+    },
+
+    getSelectedListID: state => {
+        return state.selectedListIndex
     }
 }
 

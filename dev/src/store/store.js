@@ -124,7 +124,8 @@ export default createStore({
             ],
         },
         cartData: {},
-        selectedStationDetails: ''
+        selectedListIndex: 0,
+        selectedStationPair: ''
     },
     mutations,
     actions,

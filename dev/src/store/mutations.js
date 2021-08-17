@@ -7,8 +7,13 @@ const mutations = {
         state.cartData = payload.cartData
     },
 
-    setSelectedRouteDetails(state, payload) {
-        state.selectedStationDetails = payload.stationPair
+    setSelectedStationPair(state, payload) {
+        state.selectedStationPair = payload.stationPair
+        console.log(state)
+    },
+
+    setSelectedListID(state, payload) {
+        state.selectedListIndex = payload.id
     }
 }
 

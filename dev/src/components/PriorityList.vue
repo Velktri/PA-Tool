@@ -4,7 +4,7 @@
             <ListContainer  v-for="(route, i) in setActiveRouteList()" 
                             :key="i"
                             :id="i"
-                            :isSelected="i === selectionID" 
+                            :isSelected="i === selectionID"
                             :routeData="route" 
                             @listClicked='onListClicked'
             />
@@ -20,16 +20,16 @@ export default {
         ListContainer
     },
 
-    data() {
-        return {
-            selectionID: 0
+    computed: {
+        selectionID() {
+            return this.$store.getters.getSelectedListID
         }
     },
     
     methods: {
         onListClicked(payload) {
-            this.selectionID = payload.id
-            this.$store.commit('setSelectedRouteDetails', { 'stationPair': payload.station })
+            this.$store.commit('setSelectedListID', { 'id': payload.id })
+            this.$store.commit('setSelectedStationPair', { 'stationPair': payload.station })
         },
 
         computePercentage(num) {
@@ -55,9 +55,7 @@ export default {
 
                     return 0
                 })
-
-
-                /* sort the routes based on completion */
+                this.$store.commit('setSelectedStationPair', { 'stationPair': sortedRoutes[this.$store.getters.getSelectedListID].station })
                 return sortedRoutes
             }
 

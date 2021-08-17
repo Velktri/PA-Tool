@@ -22,7 +22,6 @@ export default {
 
         isSelected: {
             required: true,
-            default: false,
             type: Boolean
         }
     },
@@ -31,7 +30,7 @@ export default {
         remainingPackages() {
             let split = this.routeData.progress.split('/')
             return split[1] - split[0]
-        }
+        },
     },
 
     methods: {
@@ -39,7 +38,6 @@ export default {
             this.$emit('listClicked', { 'id': this.id, 'station': this.routeData.station })
         }
     }
-
 }
 </script>
 
