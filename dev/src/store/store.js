@@ -35,7 +35,8 @@ export default createStore({
             ]
 
         },
-        cartData: {}
+        cartData: {},
+        selectedStationDetails: ''
     },
     mutations,
     actions,

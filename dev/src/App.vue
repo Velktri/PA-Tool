@@ -1,24 +1,26 @@
 <template>
-    <div class="tile is-ancestor">
-        <div class="tile is-1">
-            <div class="tile notification is-info">
-                <Sidebar />
-            </div>
-        </div>
-
+    <div>
         <div class="tile">
-            <div class="tile notification is-warning">
-                <PriorityList />
-            </div>
-        </div>
-
-        <div class="tile is-vertical">
-            <div class="tile notification is-primary">
-                <StationDetails />
+            <div class="tile is-1">
+                <div class="tile">
+                    <Sidebar />
+                </div>
             </div>
 
-            <div class="tile notification is-danger">
-                <StationDetails />
+            <div class="tile">
+                <div class="tile container is-vertical">
+                    <PriorityList />
+                </div>
+            </div>
+
+            <div class="tile is-vertical">
+                <div class="tile">
+                    <StationDetails />
+                </div>
+
+                <div class="tile">
+                    <StationDetails />
+                </div>
             </div>
         </div>
     </div>
@@ -66,6 +68,5 @@ export default {
 </script>
 
 <style lang="scss">
-
 
 </style>

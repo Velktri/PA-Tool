@@ -15,8 +15,9 @@ export default {
 
 <style lang="scss" scoped>
 .menu {
-    //background-color: rgb(93, 130, 167);
+    background-color: rgb(93, 130, 167);
     min-height: 100vh;
+    width: 100%
 }
 
 </style>

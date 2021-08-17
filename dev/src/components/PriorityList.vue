@@ -1,14 +1,36 @@
 <template>
-    <ul>
-        <li v-for="route in setActiveRouteList()" :key="route">{{ route }}</li>
-    </ul>
-
+    <div class="container is-fluid">
+        <div class="block">
+            <ListContainer  v-for="(route, i) in setActiveRouteList()" 
+                            :key="i"
+                            :id="i"
+                            :isSelected="i === selectionID" 
+                            :routeData="route" 
+                            @listClicked='onListClicked'
+            />
+        </div>
+    </div>
 </template>
 
 <script>
+import ListContainer from "./ListContainer.vue"
+
 export default {
+    components: {
+        ListContainer
+    },
+
+    data() {
+        return {
+            selectionID: 0
+        }
+    },
     
     methods: {
+        onListClicked(payload) {
+            this.selectionID = payload.id
+            this.$store.commit('setSelectedRouteDetails', { 'stationPair': payload.station })
+        },
 
         computePercentage(num) {
             let split = num.split('/')
