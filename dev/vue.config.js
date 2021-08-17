@@ -6,5 +6,9 @@ module.exports = {
 
     chainWebpack: config => {
         config.module.rules.delete('eslint');
+        config.plugin('html').tap(args => {
+            args[0].title = 'Station Tracker'
+            return args
+        })
     }
 }

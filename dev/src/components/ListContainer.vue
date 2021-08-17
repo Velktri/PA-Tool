@@ -2,8 +2,8 @@
     <div class="tile box list-container" :class="{ selected: isSelected }" @click="selectRoute">
         {{ routeData.route }}
         {{ routeData.station }}
-        {{ routeData.percent }}
-        {{ routeData.progress }}
+        {{ routeData.percent }}% complete
+        {{ routeData.progress }} {{ remainingPackages }} packages remaining
     </div>
 </template>
 
@@ -24,6 +24,13 @@ export default {
             required: true,
             default: false,
             type: Boolean
+        }
+    },
+
+    computed: {
+        remainingPackages() {
+            let split = this.routeData.progress.split('/')
+            return split[1] - split[0]
         }
     },
 

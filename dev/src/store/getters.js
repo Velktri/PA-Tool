@@ -13,6 +13,10 @@ const getters = {
 
     getCartsInRoute: state => routeCode => {
         return (state.cartData[routeCode] !== undefined) ? state.cartData[routeCode] : []
+    },
+
+    getRoutesFromStation: state => {
+        return state.stationPairData[state.selectedStationDetails]
     }
 }
 

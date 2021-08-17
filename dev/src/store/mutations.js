@@ -9,7 +9,6 @@ const mutations = {
 
     setSelectedRouteDetails(state, payload) {
         state.selectedStationDetails = payload.stationPair
-        console.log(state)
     }
 }
 

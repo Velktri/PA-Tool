@@ -15,11 +15,7 @@
 
             <div class="tile is-vertical">
                 <div class="tile">
-                    <StationDetails />
-                </div>
-
-                <div class="tile">
-                    <StationDetails />
+                    <StationDetailsContainer />
                 </div>
             </div>
         </div>
@@ -29,14 +25,14 @@
 <script>
 import Sidebar from "./components/Sidebar.vue"
 import PriorityList from "./components/PriorityList.vue"
-import StationDetails from "./components/StationDetails.vue"
+import StationDetailsContainer from "./components/StationDetailsContainer.vue"
 
 export default {
     name: "App",
     components: {
         Sidebar,
         PriorityList,
-        StationDetails
+        StationDetailsContainer
     },
 
     methods: {

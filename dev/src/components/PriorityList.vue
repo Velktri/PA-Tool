@@ -39,8 +39,7 @@ export default {
 
         setActiveRouteList() {
             let InProgressRoutes = this.$store.getters.getInProgressRoutes
-            if (InProgressRoutes !== undefined)
-            {
+            if (InProgressRoutes !== undefined) {
                 let sortedRoutes = []
 
                 Object.keys(InProgressRoutes).forEach((pairKey) => {
