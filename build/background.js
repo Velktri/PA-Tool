@@ -17,34 +17,36 @@ function LoadContentTabs()
     })
 }
 
-function storeData(data, tabID)
+function storeData(data, tabIndex)
 {
     /* Close content tab */
     browser.storage.local.get("ST_CONTENT_TABS").then((result) => {
-        if (result.ST_CONTENT_TABS[tabID].id !== browser.tabs.TAB_ID_NONE)
+        if (result.ST_CONTENT_TABS[tabIndex].id !== browser.tabs.TAB_ID_NONE)
         {
-            browser.tabs.remove(result.ST_CONTENT_TABS[tabID].id)
-            result.ST_CONTENT_TABS[tabID] = browser.tabs.TAB_ID_NONE
+            browser.tabs.remove(result.ST_CONTENT_TABS[tabIndex].id)
+            result.ST_CONTENT_TABS[tabIndex] = browser.tabs.TAB_ID_NONE
             browser.storage.local.set({ ST_CONTENT_TABS: result.ST_CONTENT_TABS })
         }
     })
 
     /* Store content data */
-    browser.storage.local.get("ST_CONTENT_DATA_SEPERATE").then(result => {
-        result.ST_CONTENT_DATA_SEPERATE[tabID] = data
-        browser.storage.local.set({ ST_CONTENT_DATA_SEPERATE: result.ST_CONTENT_DATA_SEPERATE })
-
-        /*if (Object.keys(result.ST_CONTENT_DATA_SEPERATE[0]).length > 0 && Object.keys(result.ST_CONTENT_DATA_SEPERATE[1]).length > 0)
-        {
-            mergeCartData(result.ST_CONTENT_DATA_SEPERATE[0]).then(cartData => {
-                browser.storage.local.set({ carts: injectPickData(cartData, result.ST_CONTENT_DATA_SEPERATE[1]) })
-                browser.storage.local.set({ ST_CONTENT_DATA_SEPERATE: [{}, {}] })
-                browser.storage.local.get('SO_UI').then((res) => {
-                    browser.tabs.sendMessage(res.SO_UI, { command: 'SO_carts_updated' })
-                })
+    if (tabIndex === 0)
+    {
+        browser.storage.local.set({ ST_CART_DATA: data }).then(() => {
+            browser.storage.local.get('ST_UI').then((res) => {
+                browser.tabs.sendMessage(res.ST_UI, { command: 'ST_CART_DATA_UPDATED' })
             })
-        }*/
-    })
+        })
+    }
+
+    if (tabIndex === 1) 
+    {
+        browser.storage.local.set({ ST_STATION_PAIR_DATA: data }).then(() => {
+            browser.storage.local.get('ST_UI').then((res) => {
+                browser.tabs.sendMessage(res.ST_UI, { command: 'ST_STATION_DATA_UPDATED' })
+            })
+        })
+    }
 }
 
 function handleMessages(request, sender, sendResponse)
@@ -111,5 +113,6 @@ browser.runtime.onMessage.addListener(handleMessages)
 
 /* Storage API */
 browser.storage.local.set({ ST_UI: browser.tabs.TAB_ID_NONE })
-browser.storage.local.set({ ST_CONTENT_DATA_SEPERATE: [{}, {}] })
+browser.storage.local.set({ ST_CART_DATA: {} })
+browser.storage.local.set({ ST_STATION_PAIR_DATA: {} })
 browser.storage.local.set({ ST_CONTENT_TABS: [] })

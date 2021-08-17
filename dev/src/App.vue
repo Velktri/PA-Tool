@@ -1,26 +1,71 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+    <div class="tile is-ancestor">
+        <div class="tile is-1">
+            <div class="tile notification is-info">
+                <Sidebar />
+            </div>
+        </div>
+
+        <div class="tile">
+            <div class="tile notification is-warning">
+                <PriorityList />
+            </div>
+        </div>
+
+        <div class="tile is-vertical">
+            <div class="tile notification is-primary">
+                <StationDetails />
+            </div>
+
+            <div class="tile notification is-danger">
+                <StationDetails />
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Sidebar from "./components/Sidebar.vue"
+import PriorityList from "./components/PriorityList.vue"
+import StationDetails from "./components/StationDetails.vue"
 
 export default {
-  name: "App",
-  components: {
-    HelloWorld,
-  },
-};
+    name: "App",
+    components: {
+        Sidebar,
+        PriorityList,
+        StationDetails
+    },
+
+    methods: {
+        processStationData() {
+            browser.storage.local.get('ST_STATION_PAIR_DATA').then((res) => {
+                this.$store.commit('setStationData', { stationPairData: res.ST_STATION_PAIR_DATA })
+            })
+        },
+
+        processCartData() {
+            browser.storage.local.get('ST_CART_DATA').then((res) => {
+                this.$store.commit('setCartData', { cartData: res.ST_CART_DATA })
+            })
+        }
+    },
+
+    async created() {
+        browser.runtime.onMessage.addListener((res) => {
+            if (res.command === 'ST_STATION_DATA_UPDATED') {
+                this.processStationData()
+            }
+
+            if (res.command === 'ST_CART_DATA_UPDATED') {
+                this.processCartData()
+            }
+        })
+    },
+}
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
+
 </style>
