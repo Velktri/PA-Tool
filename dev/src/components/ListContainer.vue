@@ -1,10 +1,10 @@
 <template>
-    <div class="tile box list-container" :class="{ selected: isSelected }" @click="selectRoute">
+    <button class="tile button list-container" :class="{ 'is-primary': isSelected }" @click="selectRoute">
         {{ routeData.route }}
         {{ routeData.station }}
         {{ routeData.percent }}% complete
         {{ routeData.progress }} {{ remainingPackages }} packages remaining
-    </div>
+    </button>
 </template>
 
 <script>
@@ -14,6 +14,7 @@ export default {
             required: true,
             type: Object
         },
+
 
         id: {
             required: true,
@@ -43,7 +44,8 @@ export default {
 
 <style lang="scss" scoped>
 .list-container {
-    background-color: rgb(140, 175, 211);
+    min-width: 100%;
+    margin-bottom: .5rem;
 }
 
 .selected {

@@ -4,11 +4,14 @@
 }
 
 html {
-    height: 100vh
+    height: 100vh;
+    scrollbar-color: #4c5759 #343c3d;
+    scrollbar-width: thin;
 }
 
 body {
-    min-height: 100vh
+    min-height: 100vh;
+
 }
 
 // Bulma Import

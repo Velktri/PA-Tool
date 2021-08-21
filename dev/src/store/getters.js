@@ -21,6 +21,14 @@ const getters = {
 
     getSelectedListID: state => {
         return state.selectedListIndex
+    },
+
+    getSelectedStationPair: state => {
+        return state.selectedStationPair
+    },
+
+    getCartsFromRoute: state => routeCode => {
+        return state.cartData[routeCode]
     }
 }
 

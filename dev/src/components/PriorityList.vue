@@ -1,6 +1,5 @@
 <template>
-    <div class="container is-fluid priority-css">
-        <div class="block">
+    <div class="priority-css st-list-container">
             <ListContainer  v-for="(route, i) in setActiveRouteList()" 
                             :key="i"
                             :id="i"
@@ -8,7 +7,6 @@
                             :routeData="route" 
                             @listClicked='onListClicked'
             />
-        </div>
     </div>
 </template>
 
@@ -69,5 +67,11 @@ export default {
 .priority-css {
     height:100vh;
     overflow:auto;
+}
+
+.st-list-container {
+    padding-top: 1.5rem;
+    scrollbar-width: thin;
+
 }
 </style>

@@ -1,23 +1,15 @@
 <template>
-    <div>
-        <div class="tile">
-            <div class="tile is-1">
-                <div class="tile">
-                    <Sidebar />
-                </div>
-            </div>
+    <div class="columns is-gapless">
+        <div class="column is-1">
+            <Sidebar />
+        </div>
 
-            <div class="tile">
-                <div class="tile container is-vertical">
-                    <PriorityList />
-                </div>
-            </div>
+        <div class="column is-4">
+            <PriorityList />
+        </div>
 
-            <div class="tile is-vertical">
-                <div class="tile">
-                    <StationDetailsContainer />
-                </div>
-            </div>
+        <div class="column">
+            <StationDetailsContainer />
         </div>
     </div>
 </template>

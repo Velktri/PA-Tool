@@ -9,7 +9,6 @@ const mutations = {
 
     setSelectedStationPair(state, payload) {
         state.selectedStationPair = payload.stationPair
-        console.log(state)
     },
 
     setSelectedListID(state, payload) {
