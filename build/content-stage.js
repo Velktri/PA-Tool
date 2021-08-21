@@ -26,12 +26,27 @@ function extractRowData(rowData)
     let children = rowData.children
 
     let cartName = children[0].children[0].innerHTML
+    let stageTime = alignStageTime(children[2].children[0].innerHTML)
     let route = children[1].children[0].textContent
+    let dwellTime = children[5].children[0].innerHTML
 
     let status = children[4].children[0].textContent.trim()
     if (status.slice(0, 3) === "Not") { status = "Not Ready" }
 
-    return { route, cartName, status }
+    return { route, stageTime, cartName, status, dwellTime }
+}
+
+function alignStageTime(stageTime)
+{
+    let newStageTime = stageTime
+    let stageSplit = stageTime.split(':')
+
+    if (stageSplit[1] !== '20' && stageSplit[1] !== '50')
+    {
+        newStageTime = stageSplit[0] + ':' + (parseInt(stageSplit[1]) + 15)
+    }
+
+    return newStageTime
 }
 
 function getNextButton()
