@@ -14,7 +14,7 @@ function readTable(waveData)
                 waveData[rowData.route] = []
             }
 
-            waveData[rowData.route].push({ cartName: rowData.cartName, status: rowData.status })
+            waveData[rowData.route].push({ cartName: rowData.cartName, status: rowData.status, dwellTime: rowData.dwellTime })
         }
     }
 

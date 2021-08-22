@@ -1,21 +1,20 @@
 <template>
     <div v-if="routeDetails !== undefined" class="card">
-        <header v-if="Object.keys(routeDetails).length > 0" class="card-header">
-            <p class="card-header-title so-title-font">
-                {{ routeDetails.route }}
-            </p>
+        <header class="card-header">
+            <div class="level st-fill-width">
+                <div class="card-header-title st-title-font level-left">
+                    {{ routeDetails.route }}
+                </div>
 
-            <p class="card-header-title so-title-font">
-                {{ routeDetails.progress }} | {{ progressPercent }}
-            </p>
+                <div class="card-header-title st-title-font level-right columns">
+                    <div class="columm">
+                        <div>{{ routeDetails.progress }}</div>
+                        <div>{{ progressPercent }}</div>
+                    </div>
+                </div>
+            </div>
         </header>
 
-        
-        <header v-else class="card-header">
-            <p class="card-header-title so-title-font is-centered">
-                Empty
-            </p>
-        </header>
         <div class="card-content">
             <div class="" v-for="(cart, i) in getCarts()" :key="i">
                 <CartList :cartData="cart" />
@@ -57,5 +56,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.card-content {
+    padding: 0.55rem 0.6rem;
+}
 
+.st-title-font {
+    font-size: 125%;
+}
+.st-fill-width {
+    width: 100%;
+}
 </style>

@@ -27,7 +27,7 @@ export default createStore({
             'P21': [
                 { route: 'CX99', status: 'RouteCut', progress: '185/185' },
                 { route: 'CX245', status: 'In Progress', progress: '91/265' },
-                { route: 'CX197', status: 'In Progress', progress: '91/278' },
+                { route: 'CX197', status: 'In Progress', progress: '278/278' },
                 { route: 'CX18', status: 'RouteCut', progress: '241/242' },
                 { route: 'CX8', status: 'Picked', progress: '245/247' },
                 { route: 'CX106', status: 'Picked', progress: '251/254' }
@@ -123,7 +123,92 @@ export default createStore({
                 { route: 'CX17', status: 'RouteCut', progress: '233/235' }
             ],
         },
-        cartData: {},
+        cartData: {
+            'CX245': [
+                {
+                    cartName: 'CRT1-532-VND',
+                    status: 'Ready'
+                },
+                {
+                    cartName: 'CRT1-552-XLT',
+                    status: 'Not Ready'
+                },
+                {
+                    cartName: 'CRT1-119-WOT',
+                    status: 'Staged'
+                }
+            ],
+            'CX197': [
+                {
+                    cartName: 'CRT1-532-VND',
+                    status: 'Ready'
+                },
+                {
+                    cartName: 'CRT1-552-XLT',
+                    status: 'Not Ready'
+                },
+                {
+                    cartName: 'CRT1-119-WOT',
+                    status: 'Staged'
+                }
+            ],
+            'CX99': [
+                {
+                    cartName: 'CRT1-532-VND',
+                    status: 'Ready'
+                },
+                {
+                    cartName: 'CRT1-552-XLT',
+                    status: 'Not Ready'
+                },
+                {
+                    cartName: 'CRT1-119-WOT',
+                    status: 'Staged'
+                }
+            ],
+            'CX18': [
+                {
+                    cartName: 'CRT1-532-VND',
+                    status: 'Ready'
+                },
+                {
+                    cartName: 'CRT1-552-XLT',
+                    status: 'Not Ready'
+                },
+                {
+                    cartName: 'CRT1-119-WOT',
+                    status: 'Staged'
+                }
+            ],
+            'CX8': [
+                {
+                    cartName: 'CRT1-532-VND',
+                    status: 'Ready'
+                },
+                {
+                    cartName: 'CRT1-552-XLT',
+                    status: 'Not Ready'
+                },
+                {
+                    cartName: 'CRT1-119-WOT',
+                    status: 'Staged'
+                }
+            ],
+            'CX106': [
+                {
+                    cartName: 'CRT1-532-VND',
+                    status: 'Ready'
+                },
+                {
+                    cartName: 'CRT1-552-XLT',
+                    status: 'Not Ready'
+                },
+                {
+                    cartName: 'CRT1-119-WOT',
+                    status: 'Staged'
+                }
+            ],
+        },
         selectedListIndex: 0,
         selectedStationPair: ''
     },

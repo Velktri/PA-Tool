@@ -1,5 +1,5 @@
 <template>
-    <div class="so-button" @click="auditCart">
+    <div class="st-cart-list">
         <div class="level">
             <div class="level-left">
                 <span>{{ cartData.cartName }}</span>
@@ -35,5 +35,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$padding-y: calc(.20em - 1px);
+$padding-x: 0.15em;
 
+.st-cart-list {
+    border-radius: .4em;
+    border: 1px solid transparent;
+    padding-bottom: $padding-y;
+    padding-left: $padding-x;
+    padding-right: $padding-x;
+    padding-top: $padding-y;
+    user-select:none;
+}
 </style>
