@@ -1,12 +1,14 @@
 <template>
     <div class="priority-css st-list-container">
-            <ListContainer  v-for="(route, i) in setActiveRouteList()" 
+            <ListContainer  v-for="(route, i) in setActiveRouteList()"
                             :key="i"
                             :id="i"
                             :isSelected="i === selectionID"
                             :routeData="route" 
                             @listClicked='onListClicked'
             />
+
+            <div class="st-buffer"></div>
     </div>
 </template>
 
@@ -70,8 +72,11 @@ export default {
 }
 
 .st-list-container {
-    padding-top: 1.5rem;
+    padding: 1.5rem;
     scrollbar-width: thin;
+}
 
+.st-buffer {
+    height: 50px;
 }
 </style>

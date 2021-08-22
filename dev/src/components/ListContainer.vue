@@ -1,9 +1,10 @@
 <template>
-    <button class="tile button list-container" :class="{ 'is-primary': isSelected }" @click="selectRoute">
-        {{ routeData.route }}
-        {{ routeData.station }}
-        {{ routeData.percent }}% complete
-        {{ routeData.progress }} {{ remainingPackages }} packages remaining
+    <button class="tile button list-container" :class="{ 'st-outlined': isSelected }" @click="selectRoute">
+        <div class="st-p-r">{{ routeData.route }}</div>
+        <div class="st-p-r">{{ routeData.station }}</div>
+        <div class="st-p-r">{{ routeData.percent }}%</div>
+        <div class="st-p-r">{{ routeData.progress }}</div>
+        <div>{{ remainingPackages }} remaining</div>
     </button>
 </template>
 
@@ -48,7 +49,20 @@ export default {
     margin-bottom: .5rem;
 }
 
-.selected {
-    background-color: limegreen;
+.st-p-r {
+    padding-right: 1.5rem;
+}
+
+.st-outlined {
+    border-color: #2ecc71;
+}
+
+.st-outlined:hover {
+    border-color: #2ecc71;
+}
+
+.st-outlined:focus {
+    color: white;
+    border-color: #2ecc71;
 }
 </style>
