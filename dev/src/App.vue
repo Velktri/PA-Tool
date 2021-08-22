@@ -10,21 +10,30 @@
             <div class="container is-fluid">
                 <div class="overview">
                     <div class="box">
-                        
                         <div class="control">
                             <label class="radio">
                                 <input type="radio" name="routeFilter" value="percentage" v-model="routeFilter" checked>
-                                Percentage Remaining
+                                Percentage
                             </label>
                             <label class="radio">
                                 <input type="radio" name="routeFilter" value="packages" v-model="routeFilter">
-                                Packages Remaining
+                                Remaining Packages
+                            </label>
+                        </div>
+
+                        <div class="control">
+                            <label class="radio">
+                                <input type="radio" name="listType" value="routes" v-model="listType" checked>
+                                Route View
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="listType" value="stations" v-model="listType">
+                                Station View
                             </label>
                         </div>
                     </div>
                 </div>
                 <div class="columns content">
-                    
                     <div class="column is-4">
                         <PriorityList />
                     </div>
@@ -54,10 +63,19 @@ export default {
     computed: {
         routeFilter: {
             get() {
-                return this.$store.getters.getSelectedRouteFilter;
+                return this.$store.getters.getSelectedRouteFilter
             },
             set(filter) {
-                this.$store.commit("setSelectedRouteFilter", filter);
+                this.$store.commit("setSelectedRouteFilter", filter)
+            }
+        },
+
+        listType: {
+            get() {
+                return this.$store.getters.getSelectedListType
+            },
+            set(type) {
+                this.$store.commit("setSelectedListType", type)
             }
         }
     },

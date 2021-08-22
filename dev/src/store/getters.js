@@ -32,6 +32,9 @@ const getters = {
     },
     getSelectedRouteFilter: state => {
         return state.selectedRouteFilterType
+    },
+    getSelectedListType: state => {
+        return state.selectedListType
     }
 }
 

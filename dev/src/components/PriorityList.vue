@@ -1,7 +1,17 @@
 <template>
     <div class="box">
-        <div class="priority-css st-list-container">
-            <ListContainer  v-for="(route, i) in setActiveRouteList()"
+        <div v-if="$store.getters.getSelectedListType === 'routes'" class="priority-css st-list-container">
+            <RouteListContainer v-for="(route, i) in setActiveRouteList()"
+                            :key="i"
+                            :id="i"
+                            :isSelected="i === selectionID"
+                            :routeData="route" 
+                            @listClicked='onListClicked'
+            />
+        </div>
+
+        <div v-else class="priority-css st-list-container">
+            <StationListContainer v-for="(route, i) in setActiveStationList()"
                             :key="i"
                             :id="i"
                             :isSelected="i === selectionID"
@@ -13,11 +23,13 @@
 </template>
 
 <script>
-import ListContainer from "./ListContainer.vue"
+import RouteListContainer from "./RouteListContainer.vue"
+import StationListContainer from "./StationListContainer.vue"
 
 export default {
     components: {
-        ListContainer
+        RouteListContainer,
+        StationListContainer
     },
 
     computed: {
@@ -46,6 +58,12 @@ export default {
             }
 
             return []
+        },
+
+        setActiveStationList() {
+
+            // @TODO
+            return [1,1,1]
         },
 
         sortRouteFromFilter(routeObj) {
