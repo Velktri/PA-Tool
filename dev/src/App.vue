@@ -3,13 +3,37 @@
         <div class="column is-1">
             <Sidebar />
         </div>
-
-        <div class="column is-4">
-            <PriorityList />
-        </div>
-
         <div class="column">
-            <StationDetailsContainer />
+            <div class="header">
+                header
+            </div>
+            <div class="container is-fluid">
+                <div class="overview">
+                    <div class="box">
+                        
+                        <div class="control">
+                            <label class="radio">
+                                <input type="radio" name="routeFilter" value="percentage" v-model="routeFilter" checked>
+                                Percentage Remaining
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="routeFilter" value="packages" v-model="routeFilter">
+                                Packages Remaining
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="columns content">
+                    
+                    <div class="column is-4">
+                        <PriorityList />
+                    </div>
+
+                    <div class="column">
+                        <StationDetailsContainer />
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -25,6 +49,17 @@ export default {
         Sidebar,
         PriorityList,
         StationDetailsContainer
+    },
+
+    computed: {
+        routeFilter: {
+            get() {
+                return this.$store.getters.getSelectedRouteFilter;
+            },
+            set(filter) {
+                this.$store.commit("setSelectedRouteFilter", filter);
+            }
+        }
     },
 
     methods: {
@@ -56,5 +91,18 @@ export default {
 </script>
 
 <style lang="scss">
+
+.header {
+    height: $header-height2;
+    background-color: $test-color;
+}
+
+.overview {
+    height: $overview-height;
+}
+
+.content {
+    height: calc(#{$content-height} + 0.75rem);
+}
 
 </style>

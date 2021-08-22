@@ -1,5 +1,6 @@
 <template>
-    <div class="priority-css st-list-container">
+    <div class="box">
+        <div class="priority-css st-list-container">
             <ListContainer  v-for="(route, i) in setActiveRouteList()"
                             :key="i"
                             :id="i"
@@ -7,8 +8,7 @@
                             :routeData="route" 
                             @listClicked='onListClicked'
             />
-
-            <div class="st-buffer"></div>
+        </div>
     </div>
 </template>
 
@@ -40,40 +40,58 @@ export default {
         setActiveRouteList() {
             let InProgressRoutes = this.$store.getters.getInProgressRoutes
             if (InProgressRoutes !== undefined) {
-                let sortedRoutes = []
+                let sortedRoutes = this.sortRouteFromFilter(InProgressRoutes)
+                this.$store.commit('setSelectedStationPair', { 'stationPair': sortedRoutes[this.$store.getters.getSelectedListID].station })
+                return sortedRoutes
+            }
 
-                Object.keys(InProgressRoutes).forEach((pairKey) => {
-                    InProgressRoutes[pairKey].forEach((route) => {
+            return []
+        },
 
-                        sortedRoutes.push({ 'station': pairKey, 'percent': this.computePercentage(route.progress), ...route })
-                    })
+        sortRouteFromFilter(routeObj) {
+            let filterType = this.$store.getters.getSelectedRouteFilter
+            let sortedRoutes = []
+
+            Object.keys(routeObj).forEach((pairKey) => {
+                routeObj[pairKey].forEach((route) => {
+
+                    sortedRoutes.push({ 'station': pairKey, 'percent': this.computePercentage(route.progress), ...route })
                 })
+            })
 
+            if (filterType === 'percentage') {
                 sortedRoutes.sort((x, y) => {
                     if (x.percent < y.percent) { return 1 }
                     if (x.percent > y.percent) { return -1 }
 
                     return 0
                 })
-                this.$store.commit('setSelectedStationPair', { 'stationPair': sortedRoutes[this.$store.getters.getSelectedListID].station })
-                return sortedRoutes
             }
 
-            return []
+            if (filterType === 'packages') {
+                sortedRoutes.sort((x, y) => {
+                    let xRemain = x.progress.split('/')[1] - x.progress.split('/')[0]
+                    let yRemain = y.progress.split('/')[1] - y.progress.split('/')[0]
+                    if (xRemain < yRemain) { return -1 }
+                    if (xRemain > yRemain) { return 1 }
+
+                    return 0
+                })
+            }
+
+            return sortedRoutes
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.priority-css {
-    height:100vh;
-    overflow:auto;
-}
 
 .st-list-container {
-    padding: 1.5rem;
+    padding: 0.5rem;
     scrollbar-width: thin;
+    height: calc(#{$content-height} - 3.75rem);
+    overflow:auto;
 }
 
 .st-buffer {

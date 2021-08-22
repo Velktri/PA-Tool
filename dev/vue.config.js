@@ -10,5 +10,13 @@ module.exports = {
             args[0].title = 'Station Tracker'
             return args
         })
+    },
+
+    css: {
+        loaderOptions: {
+            sass: {
+                prependData: `@import "~@/assets/main.scss";`
+            }
+        }
     }
 }

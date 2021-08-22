@@ -13,6 +13,10 @@ const mutations = {
 
     setSelectedListID(state, payload) {
         state.selectedListIndex = payload.id
+    },
+
+    setSelectedRouteFilter(state, filter) {
+        state.selectedRouteFilterType = filter
     }
 }
 

@@ -29,6 +29,9 @@ const getters = {
 
     getCartsFromRoute: state => routeCode => {
         return state.cartData[routeCode]
+    },
+    getSelectedRouteFilter: state => {
+        return state.selectedRouteFilterType
     }
 }
 

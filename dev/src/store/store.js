@@ -30,6 +30,12 @@ export default createStore({
                 { route: 'CX197', status: 'In Progress', progress: '278/278' },
                 { route: 'CX18', status: 'RouteCut', progress: '241/242' },
                 { route: 'CX8', status: 'Picked', progress: '245/247' },
+                { route: 'CX106', status: 'Picked', progress: '251/254' },
+                { route: 'CX18', status: 'RouteCut', progress: '241/242' },
+                { route: 'CX8', status: 'Picked', progress: '245/247' },
+                { route: 'CX106', status: 'Picked', progress: '251/254' },
+                { route: 'CX18', status: 'RouteCut', progress: '241/242' },
+                { route: 'CX8', status: 'Picked', progress: '245/247' },
                 { route: 'CX106', status: 'Picked', progress: '251/254' }
             ],
             'P08': [
@@ -136,6 +142,10 @@ export default createStore({
                 {
                     cartName: 'CRT1-119-WOT',
                     status: 'Staged'
+                },
+                {
+                    cartName: 'CRT1-119-WIT',
+                    status: 'Staged'
                 }
             ],
             'CX197': [
@@ -210,7 +220,8 @@ export default createStore({
             ],
         },
         selectedListIndex: 0,
-        selectedStationPair: ''
+        selectedStationPair: '',
+        selectedRouteFilterType: 'percentage'
     },
     mutations,
     actions,
