@@ -1,21 +1,19 @@
 <template>
     <button class="tile button list-container" :class="{ 'st-outlined': isSelected }" @click="selectRoute">
-        <div class="st-p-r">{{ routeData.route }}</div>
-        <div class="st-p-r">{{ routeData.station }}</div>
-        <div class="st-p-r">{{ routeData.percent }}%</div>
-        <div class="st-p-r">{{ routeData.progress }}</div>
-        <div>{{ remainingPackages }} remaining</div>
+        <component :is="activeComponent" :contentData='contentData' />
     </button>
 </template>
 
 <script>
+import RouteList from './ListContents/RouteList.vue'
+import StationList from './ListContents/StationList.vue'
+
 export default {
     props: {
-        routeData: {
+        contentData: {
             required: true,
             type: Object
         },
-
 
         id: {
             required: true,
@@ -29,15 +27,19 @@ export default {
     },
 
     computed: {
-        remainingPackages() {
-            let split = this.routeData.progress.split('/')
-            return split[1] - split[0]
-        },
+        activeComponent() {
+            let isRouteType = this.$store.getters.getSelectedListType
+            if (isRouteType === 'routes') {
+                return RouteList
+            }
+
+            return StationList
+        }
     },
 
     methods: {
         selectRoute() {
-            this.$emit('listClicked', { 'id': this.id, 'station': this.routeData.station })
+            this.$emit('listClicked', { 'id': this.id, 'station': this.contentData.station })
         }
     }
 }
@@ -46,11 +48,7 @@ export default {
 <style lang="scss" scoped>
 .list-container {
     min-width: 100%;
-    margin-bottom: .5rem;
-}
-
-.st-p-r {
-    padding-right: 1.5rem;
+    margin-bottom: .38rem;
 }
 
 .st-outlined {

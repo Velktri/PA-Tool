@@ -1,21 +1,11 @@
 <template>
     <div class="box">
-        <div v-if="$store.getters.getSelectedListType === 'routes'" class="priority-css st-list-container">
-            <RouteListContainer v-for="(route, i) in setActiveRouteList()"
+        <div class="priority-css st-list-container">
+            <RouteListContainer v-for="(route, i) in setActiveList()"
                             :key="i"
                             :id="i"
                             :isSelected="i === selectionID"
-                            :routeData="route" 
-                            @listClicked='onListClicked'
-            />
-        </div>
-
-        <div v-else class="priority-css st-list-container">
-            <StationListContainer v-for="(route, i) in setActiveStationList()"
-                            :key="i"
-                            :id="i"
-                            :isSelected="i === selectionID"
-                            :routeData="route" 
+                            :contentData="route" 
                             @listClicked='onListClicked'
             />
         </div>
@@ -23,13 +13,11 @@
 </template>
 
 <script>
-import RouteListContainer from "./RouteListContainer.vue"
-import StationListContainer from "./StationListContainer.vue"
+import RouteListContainer from "./ListContentsContainer.vue"
 
 export default {
     components: {
         RouteListContainer,
-        StationListContainer
     },
 
     computed: {
@@ -49,21 +37,47 @@ export default {
             return Math.floor(100 * ((split[0] / split[1]).toFixed(2)))
         },
 
-        setActiveRouteList() {
+        setActiveList() {
             let InProgressRoutes = this.$store.getters.getInProgressRoutes
+            let activeView = this.$store.getters.getSelectedListType
+            let sortedRoutes = []
+
             if (InProgressRoutes !== undefined) {
-                let sortedRoutes = this.sortRouteFromFilter(InProgressRoutes)
+                if (activeView === 'routes') {
+                    sortedRoutes = this.sortRouteFromFilter(InProgressRoutes)
+                }
+
+                if (activeView === 'stations') {
+                    sortedRoutes = this.sortStationsFromFilter(InProgressRoutes)
+                }
+                
                 this.$store.commit('setSelectedStationPair', { 'stationPair': sortedRoutes[this.$store.getters.getSelectedListID].station })
-                return sortedRoutes
             }
 
-            return []
+            return sortedRoutes
         },
 
-        setActiveStationList() {
+        sortStationsFromFilter(routeObj) {
+            let sortedRoutes = []
+            Object.keys(routeObj).forEach((pairKey) => {
+                let stationObj = { 'station': pairKey, 'routeData': [] }
+                routeObj[pairKey].forEach(route => {
+                    stationObj.routeData.push({ 'route': route.route, 'percent': this.computePercentage(route.progress) })
+                })
 
-            // @TODO
-            return [1,1,1]
+                sortedRoutes.push(stationObj)
+            })
+
+            sortedRoutes.sort((x, y) => {
+                let xStation = parseInt(x.station.substring(1))
+                let yStation = parseInt(y.station.substring(1))
+
+                if (xStation < yStation) { return -1 }
+                if (xStation > yStation) { return 1 }
+                
+            })
+
+            return sortedRoutes
         },
 
         sortRouteFromFilter(routeObj) {
@@ -108,7 +122,7 @@ export default {
 .st-list-container {
     padding: 0.5rem;
     scrollbar-width: thin;
-    height: calc(#{$content-height} - 3.75rem);
+    height: calc(#{$content-height} - 3.5rem);
     overflow:auto;
 }
 

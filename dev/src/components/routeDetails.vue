@@ -17,7 +17,7 @@
 
         <div class="card-content">
             <div class="" v-for="(cart, i) in getCarts()" :key="i">
-                <CartList :cartData="cart" />
+                <CartDetails :cartData="cart" />
             </div>
         </div>
     </div>
@@ -26,11 +26,11 @@
 </template>
 
 <script>
-import CartList from './cartList.vue'
+import CartDetails from './CartDetails.vue'
 
 export default {
     components: {
-        CartList
+        CartDetails
     },
 
     props: {

@@ -4,32 +4,41 @@
             <Sidebar />
         </div>
         <div class="column">
-            <div class="header">
-                header
-            </div>
             <div class="container is-fluid">
                 <div class="overview">
-                    <div class="box">
-                        <div class="control">
-                            <label class="radio">
-                                <input type="radio" name="routeFilter" value="percentage" v-model="routeFilter" checked>
-                                Percentage
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="routeFilter" value="packages" v-model="routeFilter">
-                                Remaining Packages
-                            </label>
+                    <div class="columns">
+                        <div class="column is-1">
+                            <div class="box">
+                                <div class="control">
+                                    <label class="radio">
+                                        <input type="radio" name="listType" value="routes" v-model="listType" checked>
+                                        Routes
+                                    </label><br />
+                                    <label class="radio">
+                                        <input type="radio" name="listType" value="stations" v-model="listType">
+                                        Stations
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="control">
-                            <label class="radio">
-                                <input type="radio" name="listType" value="routes" v-model="listType" checked>
-                                Route View
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="listType" value="stations" v-model="listType">
-                                Station View
-                            </label>
+                        <div class="column is-3">
+                            <div class="box">
+                                <div class="control">
+                                    <label class="radio">
+                                        <input type="radio" name="routeFilter" value="percentage" v-model="routeFilter" checked>
+                                        Percentage
+                                    </label><br />
+                                    <label class="radio">
+                                        <input type="radio" name="routeFilter" value="packages" v-model="routeFilter">
+                                        Remaining Packages
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="box">
+                                <div class="title is-2">{{ $store.getters.getSelectedStationPair }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -75,6 +84,7 @@ export default {
                 return this.$store.getters.getSelectedListType
             },
             set(type) {
+                this.$store.commit("setSelectedListID", { id: 0 })
                 this.$store.commit("setSelectedListType", type)
             }
         }
@@ -110,13 +120,9 @@ export default {
 
 <style lang="scss">
 
-.header {
-    height: $header-height2;
-    background-color: $test-color;
-}
-
 .overview {
     height: $overview-height;
+    margin-top: 2rem;
 }
 
 .content {

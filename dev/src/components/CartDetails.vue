@@ -46,5 +46,6 @@ $padding-x: 0.15em;
     padding-right: $padding-x;
     padding-top: $padding-y;
     user-select:none;
+    font-size: .85rem;
 }
 </style>
