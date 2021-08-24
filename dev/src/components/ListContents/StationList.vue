@@ -1,16 +1,41 @@
 <template>
-    <div class="st-p-r">{{ contentData.station }}</div>
+    <div class="columns is-gapless st-fw">
+        <div class="column is-2">
+            <div class="st-p-r">{{ contentData.station }}</div>
+        </div>
 
-    <div class="st-p-r" v-for="(data, i) in contentData.routeData" :key="i">
-        <span class="">{{ data.route }}&nbsp;</span>
-        <span class="st-p-r">{{ data.percent }}%</span>
+
+        <div class="column">
+            <div class="columns is-gapless">
+                <div class="column" v-if="contentData.routeData.length >= 1">
+                    <span>{{ contentData.routeData[0].route }}&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                    <span>{{ contentData.routeData[0].percent }}%</span>
+                </div>
+                <div class="column" v-if="contentData.routeData.length >= 2">
+                    <span>{{ contentData.routeData[1].route }}&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                    <span>{{ contentData.routeData[1].percent }}%</span>
+                </div>
+                <div class="column" v-else></div>
+            </div>
+        </div>
+
+        <div class="column is-2">
+            <div v-if="contentData.routeData.length < 2">
+                <span class="icon has-text-danger">
+                    <i class="fas fa-info-circle"></i>
+                </span>
+            </div>
+            <div v-else>
+                <span class="icon has-text-success">
+                    <i class="far fa-check-circle"></i>
+                </span>
+            </div>
+        </div>
     </div>
 
-    <div v-if="contentData.routeData.length < 2">
-        <span class="icon has-text-danger">
-            <i class="fas fa-info-circle"></i>
-        </span>
-    </div>
+
+
+
 </template>
 
 <script>
@@ -34,5 +59,9 @@ export default {
 <style lang="scss" scoped>
 .st-p-r {
     padding-right: 1.5rem;
+}
+
+.st-fw {
+    width: 100%;
 }
 </style>

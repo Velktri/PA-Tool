@@ -102,12 +102,14 @@ export default {
     methods: {
         processStationData() {
             browser.storage.local.get('ST_STATION_PAIR_DATA').then((res) => {
+                //console.log(res.ST_STATION_PAIR_DATA)
                 this.$store.commit('setStationData', { stationPairData: res.ST_STATION_PAIR_DATA })
             })
         },
 
         processCartData() {
             browser.storage.local.get('ST_CART_DATA').then((res) => {
+                //console.log(res.ST_CART_DATA)
                 this.$store.commit('setCartData', { cartData: res.ST_CART_DATA })
             })
         }

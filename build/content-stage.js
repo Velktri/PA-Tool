@@ -11,10 +11,10 @@ function readTable(waveData)
             let rowData = extractRowData(rows[i])
             if (waveData[rowData.route] === undefined)
             {
-                waveData[rowData.route] = []
+                waveData[rowData.route] = { 'waveTime': rowData.stageTime, carts: [] }
             }
 
-            waveData[rowData.route].push({ cartName: rowData.cartName, status: rowData.status, dwellTime: rowData.dwellTime })
+            waveData[rowData.route].carts.push({ cartName: rowData.cartName, status: rowData.status, dwellTime: rowData.dwellTime })
         }
     }
 
@@ -112,6 +112,7 @@ function callback(mutations, observer)
 {
     if (mutations[0].target.tagName === 'TBODY')
     {
+        compileData(observer)
         setTimeout(function() {
             browser.runtime.sendMessage({ command: 'ST_STAGE_DATA', data: compileData(observer) })
         }, 500)

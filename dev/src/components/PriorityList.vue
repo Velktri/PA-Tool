@@ -1,13 +1,20 @@
 <template>
     <div class="box">
         <div class="priority-css st-list-container">
+            <!--<div class="title is-3">
+                Wave X - (WaveTime)
+            </div>-->
             <RouteListContainer v-for="(route, i) in setActiveList()"
-                            :key="i"
-                            :id="i"
-                            :isSelected="i === selectionID"
-                            :contentData="route" 
-                            @listClicked='onListClicked'
+                                :key="i"
+                                :id="i"
+                                :isSelected="i === selectionID"
+                                :contentData="route" 
+                                @listClicked='onListClicked'
             />
+
+            <!--<div class="title is-3">
+                Wave Y - (WaveTime)
+            </div>-->
         </div>
     </div>
 </template>
