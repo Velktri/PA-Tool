@@ -35,6 +35,12 @@ const getters = {
     },
     getSelectedListType: state => {
         return state.selectedListType
+    },
+    getMinFilterRange: state => {
+        return state.minFilterRange
+    },
+    getMaxFilterRange: state => {
+        return state.maxFilterRange
     }
 }
 

@@ -20,6 +20,13 @@ const mutations = {
     },
     setSelectedListType(state, type) {
         state.selectedListType = type
+    },
+
+    setMinFilterRange(state, payload) {
+        state.minFilterRange = payload.range
+    },
+    setMaxFilterRange(state, payload) {
+        state.maxFilterRange = payload.range
     }
 }
 

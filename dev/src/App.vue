@@ -23,15 +23,22 @@
                         </div>
                         <div class="column is-3">
                             <div class="box">
-                                <div class="control">
-                                    <label class="radio">
-                                        <input type="radio" name="routeFilter" value="percentage" v-model="routeFilter" checked>
-                                        Percentage
-                                    </label><br />
-                                    <label class="radio">
-                                        <input type="radio" name="routeFilter" value="packages" v-model="routeFilter">
-                                        Remaining Packages
-                                    </label>
+                                <div class="columns is-gapless">
+                                    <div class="column">
+                                        <div class="control">
+                                            <label class="radio">
+                                                <input type="radio" name="routeFilter" value="percentage" v-model="routeFilter" checked>
+                                                Percentage
+                                            </label><br />
+                                            <label class="radio">
+                                                <input type="radio" name="routeFilter" value="packages" v-model="routeFilter">
+                                                Remaining Packages
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <RangeSlider />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -60,13 +67,15 @@
 import Sidebar from "./components/Sidebar.vue"
 import PriorityList from "./components/PriorityList.vue"
 import StationDetailsContainer from "./components/StationDetailsContainer.vue"
+import RangeSlider from "./components/Utils/RangeSlider.vue"
 
 export default {
     name: "App",
     components: {
         Sidebar,
         PriorityList,
-        StationDetailsContainer
+        StationDetailsContainer,
+        RangeSlider
     },
 
     computed: {

@@ -37,8 +37,23 @@ export default {
             return Math.floor(100 * ((split[0] / split[1]).toFixed(2)))
         },
 
+        filterRoutes(routes) {
+            let filteredRoutes = {}
+            let minRange = this.$store.getters.getMinFilterRange
+            let maxRange = this.$store.getters.getMaxFilterRange
+            
+            Object.keys(routes).forEach((stationID) => {
+                let stationNum = parseInt(stationID.substring(1))
+                if (stationNum >= minRange && stationNum <= maxRange) {
+                    filteredRoutes = { ...filteredRoutes, ...{ [stationID]: routes[stationID] }}
+                }
+            })
+
+            return filteredRoutes
+        },
+
         setActiveList() {
-            let InProgressRoutes = this.$store.getters.getInProgressRoutes
+            let InProgressRoutes = this.filterRoutes(this.$store.getters.getInProgressRoutes)
             let activeView = this.$store.getters.getSelectedListType
             let sortedRoutes = []
 
@@ -86,7 +101,6 @@ export default {
 
             Object.keys(routeObj).forEach((pairKey) => {
                 routeObj[pairKey].forEach((route) => {
-
                     sortedRoutes.push({ 'station': pairKey, 'percent': this.computePercentage(route.progress), ...route })
                 })
             })

@@ -222,7 +222,9 @@ export default createStore({
         selectedListIndex: 0,
         selectedStationPair: '',
         selectedRouteFilterType: 'percentage',
-        selectedListType: 'routes'
+        selectedListType: 'routes',
+        minFilterRange: 1,
+        maxFilterRange: 19
     },
     mutations,
     actions,
