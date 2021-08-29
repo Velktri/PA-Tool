@@ -18,7 +18,8 @@ const getters = {
             if (stationNum >= state.minFilterRange && stationNum <= state.maxFilterRange) 
             {
                 let filtered = state.stationPairData[stationPair].filter(routeData => {
-                    if (routeData.status === 'In Progress' &&
+                    if (state.cartData[routeData.route] !== undefined &&
+                        routeData.status === 'In Progress' &&
                         state.cartData[routeData.route].waveTime === wave) 
                         {
                             return true
@@ -40,6 +41,16 @@ const getters = {
         })
 
         return routes
+    },
+
+    getInProgressRouteFromStation: state => station => {
+        if (state.stationPairData[station] !== undefined) {
+            let routeObj = state.stationPairData[station].find(routeData => {
+                return routeData.status === 'In Progress'
+            })
+
+            return routeObj.route
+        }
     },
 
     getCartsInRoute: state => routeCode => {
