@@ -1,18 +1,14 @@
 const mutations = {
-    setStationData(state, payload) {
-        state.stationPairData = payload.stationPairData
+    updateStationData(state, payload) {
+        state.stationPairData = { ...state.stationPairData, ...payload.stationData }
     },
 
-    setCartData(state, payload) {
-        state.cartData = payload.cartData
+    updateCartData(state, payload) {
+        state.cartData = { ...state.cartData, ...payload.cartData }
     },
 
     setSelectedStationPair(state, payload) {
         state.selectedStationPair = payload.stationPair
-    },
-
-    setSelectedListID(state, payload) {
-        state.selectedListIndex = payload.id
     },
 
     setSelectedRouteFilter(state, filter) {
@@ -27,6 +23,18 @@ const mutations = {
     },
     setMaxFilterRange(state, payload) {
         state.maxFilterRange = payload.range
+    },
+    setWaveTimes(state, payload) {
+        state.waveTimes = payload.waveTimes
+    },
+    setCurrentWaveIndex(state, payload) {
+        state.currentWaveIndex = payload.index
+    },
+    setSelectedRouteID(state, payload) {
+        state.selectedRouteID = payload.routeID
+    },
+    setMaxStationAmount(state, payload) {
+        state.maxStationAmount = payload.newMax
     }
 }
 

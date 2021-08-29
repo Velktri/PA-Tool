@@ -6,22 +6,23 @@
                 <span class="icon has-text-info">
                     <i class="fas fa-building"></i>
                 </span>
-                <span>{{ contentData.station }}</span>
+                <span class="st-pr">{{ contentData.station }}</span>
             </span>
         </div>
         <div class="column auto"></div>
-        <div class="column st-mr">
-            <span class="st-pr">{{ contentData.percent }}%</span>
-            <span class="icon-text">
-                <span class="icon has-text-success">
-                    <i class="fas fa-box-open"></i>
-                </span>
-                <span>{{ remainingPackages }}</span>
-            </span>
+        <div class="column is-6">
+            <div class="columns is-gapless">
+                <progress class="progress is-success column is-7 st-mt" :value="contentData.percent" max="100">{{ contentData.percent }}</progress>
+                <div class="column">{{ contentData.percent }}%</div>
+                <div class="icon-text column">
+                    <span class="icon has-text-success">
+                        <i class="fas fa-box-open"></i>
+                    </span>
+                    <span>{{ remainingPackages }}</span>
+                </div>
+            </div>
         </div>
-
     </div>
-
 </template>
 
 <script>
@@ -37,6 +38,10 @@ export default {
         remainingPackages() {
             let split = this.contentData.progress.split('/')
             return split[1] - split[0]
+        },
+
+        barColor() {
+
         }
     }
 }
@@ -51,7 +56,7 @@ export default {
     padding-right: 1.5rem;
 }
 
-.st-mr {
-    margin-right: 1rem;
+.st-mt {
+    margin-top: .25rem !important;
 }
 </style>

@@ -1,49 +1,44 @@
 <template>
     <div class="box">
-        <div class="priority-css st-list-container">
-            <!--<div class="title is-3">
-                Wave X - (WaveTime)
-            </div>-->
-            <RouteListContainer v-for="(route, i) in setActiveList()"
-                                :key="i"
-                                :id="i"
-                                :isSelected="i === selectionID"
-                                :contentData="route" 
-                                @listClicked='onListClicked'
-            />
-
-            <!--<div class="title is-3">
-                Wave Y - (WaveTime)
-            </div>-->
+        <div v-if="$store.getters.getSelectedListType === 'routes'" class="priority-css st-list-container">
+            <div class="st-mt" v-for="(wave, i) in waveTimes" :key="i">
+                <WaveContainer :waveTime="{ wave, 'index': i }" />
+            </div>
+        </div>
+        <div v-else>
+            <div class="priority-css st-list-container">
+                <RouteListContainer v-for="(route, i) in stationList()"
+                                            :key="i"
+                                            :id="i"
+                                            :isSelected="route.station === selectionStation"
+                                            :contentData="route"
+                />
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import RouteListContainer from "./ListContentsContainer.vue"
+import WaveContainer from './WaveContainer.vue'
 
 export default {
     components: {
         RouteListContainer,
+        WaveContainer
     },
 
     computed: {
-        selectionID() {
-            return this.$store.getters.getSelectedListID
+        selectionStation() {
+            return this.$store.getters.getSelectedStationPair
+        },
+
+        waveTimes() {
+            return this.$store.getters.getAllWaveTimes
         }
     },
     
     methods: {
-        onListClicked(payload) {
-            this.$store.commit('setSelectedListID', { 'id': payload.id })
-            this.$store.commit('setSelectedStationPair', { 'stationPair': payload.station })
-        },
-
-        computePercentage(num) {
-            let split = num.split('/')
-            return Math.floor(100 * ((split[0] / split[1]).toFixed(2)))
-        },
-
         filterRoutes(routes) {
             let filteredRoutes = {}
             let minRange = this.$store.getters.getMinFilterRange
@@ -59,81 +54,55 @@ export default {
             return filteredRoutes
         },
 
-        setActiveList() {
-            let InProgressRoutes = this.filterRoutes(this.$store.getters.getInProgressRoutes)
-            let activeView = this.$store.getters.getSelectedListType
+        stationList() {
+            let InProgressRoutes = this.$store.getters.getInProgressRoutes
+
+            let listSize = this.$store.getters.getMaxFilterRange - this.$store.getters.getMinFilterRange
+            let offset = this.$store.getters.getMinFilterRange
             let sortedRoutes = []
+            sortedRoutes = new Array(listSize).fill({})
+            
 
-            if (InProgressRoutes !== undefined) {
-                if (activeView === 'routes') {
-                    sortedRoutes = this.sortRouteFromFilter(InProgressRoutes)
-                }
-
-                if (activeView === 'stations') {
-                    sortedRoutes = this.sortStationsFromFilter(InProgressRoutes)
-                }
-                
-                this.$store.commit('setSelectedStationPair', { 'stationPair': sortedRoutes[this.$store.getters.getSelectedListID].station })
-            }
-
-            return sortedRoutes
-        },
-
-        sortStationsFromFilter(routeObj) {
-            let sortedRoutes = []
-            Object.keys(routeObj).forEach((pairKey) => {
-                let stationObj = { 'station': pairKey, 'routeData': [] }
-                routeObj[pairKey].forEach(route => {
-                    stationObj.routeData.push({ 'route': route.route, 'percent': this.computePercentage(route.progress) })
-                })
-
-                sortedRoutes.push(stationObj)
+            sortedRoutes.forEach((ele, i, arr) => {
+                arr[i] = {'station': 'P' + (i + offset), 'routeData': [] }
             })
 
-            sortedRoutes.sort((x, y) => {
-                let xStation = parseInt(x.station.substring(1))
-                let yStation = parseInt(y.station.substring(1))
+            Object.keys(InProgressRoutes).forEach((pairKey) => {
+                let stationNum = parseInt(pairKey.substring(1))
+                if (stationNum >= this.$store.getters.getMinFilterRange && stationNum <= this.$store.getters.getMaxFilterRange) 
+                {
 
-                if (xStation < yStation) { return -1 }
-                if (xStation > yStation) { return 1 }
-                
+                    let stationObj = { 'station': pairKey, 'routeData': [] }
+                    InProgressRoutes[pairKey].forEach(route => {
+                        let split = route.progress.split('/')
+                        let percent = Math.floor(100 * ((split[0] / split[1]).toFixed(2)))
+                        stationObj.routeData.push({ 'route': route.route, percent })
+                    })
+
+                    sortedRoutes[parseInt(pairKey.substring(1)) - offset] = stationObj
+                }
             })
 
             return sortedRoutes
         },
 
-        sortRouteFromFilter(routeObj) {
-            let filterType = this.$store.getters.getSelectedRouteFilter
-            let sortedRoutes = []
-
-            Object.keys(routeObj).forEach((pairKey) => {
-                routeObj[pairKey].forEach((route) => {
-                    sortedRoutes.push({ 'station': pairKey, 'percent': this.computePercentage(route.progress), ...route })
-                })
-            })
-
-            if (filterType === 'percentage') {
-                sortedRoutes.sort((x, y) => {
-                    if (x.percent < y.percent) { return 1 }
-                    if (x.percent > y.percent) { return -1 }
-
-                    return 0
-                })
+        setInitRoute() {
+            let waves = this.$store.getters.getAllWaveTimes
+            for (let i = 0; i < waves.length; i++) {
+                let routes = this.$store.getters.getFilteredInProgressRoutesFromWave(waves[i])
+                if (routes.length > 0) {
+                    this.$store.commit('setSelectedRouteID', { 'routeID': routes[0].route })
+                    this.$store.commit('setSelectedStationPair', { 'stationPair': routes[0].station })
+                    break;
+                }
             }
-
-            if (filterType === 'packages') {
-                sortedRoutes.sort((x, y) => {
-                    let xRemain = x.progress.split('/')[1] - x.progress.split('/')[0]
-                    let yRemain = y.progress.split('/')[1] - y.progress.split('/')[0]
-                    if (xRemain < yRemain) { return -1 }
-                    if (xRemain > yRemain) { return 1 }
-
-                    return 0
-                })
-            }
-
-            return sortedRoutes
         }
+
+    },
+
+    
+    mounted() {
+        this.setInitRoute()
     }
 }
 </script>
@@ -145,6 +114,14 @@ export default {
     scrollbar-width: thin;
     height: calc(#{$content-height} - 3.5rem);
     overflow:auto;
+}
+
+.st-mt:not(:first-child) {
+    margin-top: 1.5rem !important;
+}
+
+.st-mb {
+    margin-bottom: 1rem !important;
 }
 
 .st-buffer {

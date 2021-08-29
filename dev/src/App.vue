@@ -1,8 +1,8 @@
 <template>
     <div class="columns is-gapless">
-        <div class="column is-1">
+        <!--<div class="column is-1">
             <Sidebar />
-        </div>
+        </div>-->
         <div class="column">
             <div class="container is-fluid">
                 <div class="overview">
@@ -68,6 +68,7 @@ import Sidebar from "./components/Sidebar.vue"
 import PriorityList from "./components/PriorityList.vue"
 import StationDetailsContainer from "./components/StationDetailsContainer.vue"
 import RangeSlider from "./components/Utils/RangeSlider.vue"
+//import { _pickData, _stageData } from './api/test.js'
 
 export default {
     name: "App",
@@ -93,7 +94,6 @@ export default {
                 return this.$store.getters.getSelectedListType
             },
             set(type) {
-                this.$store.commit("setSelectedListID", { id: 0 })
                 this.$store.commit("setSelectedListType", type)
             }
         }
@@ -102,29 +102,32 @@ export default {
     methods: {
         processStationData() {
             browser.storage.local.get('ST_STATION_PAIR_DATA').then((res) => {
-                //console.log(res.ST_STATION_PAIR_DATA)
-                this.$store.commit('setStationData', { stationPairData: res.ST_STATION_PAIR_DATA })
+                this.$store.dispatch('processPickData', res.ST_STATION_PAIR_DATA)
             })
         },
 
         processCartData() {
             browser.storage.local.get('ST_CART_DATA').then((res) => {
-                //console.log(res.ST_CART_DATA)
-                this.$store.commit('setCartData', { cartData: res.ST_CART_DATA })
+                this.$store.dispatch('processCartData', res.ST_CART_DATA)
             })
         }
     },
 
     async created() {
-        browser.runtime.onMessage.addListener((res) => {
-            if (res.command === 'ST_STATION_DATA_UPDATED') {
-                this.processStationData()
-            }
+        /*if (process.env.NODE_ENV == 'development') {
+            this.$store.dispatch('processPickData', _pickData)
+            this.$store.dispatch('processCartData', _stageData)
+        } else {*/
+            browser.runtime.onMessage.addListener((res) => {
+                if (res.command === 'ST_STATION_DATA_UPDATED') {
+                    this.processStationData()
+                }
 
-            if (res.command === 'ST_CART_DATA_UPDATED') {
-                this.processCartData()
-            }
-        })
+                if (res.command === 'ST_CART_DATA_UPDATED') {
+                    this.processCartData()
+                }
+            })
+        //}
     },
 }
 </script>
@@ -133,7 +136,8 @@ export default {
 
 .overview {
     height: $overview-height;
-    margin-top: 2rem;
+    margin-top: 1.25rem;
+    margin-bottom: .75rem;
 }
 
 .content {

@@ -49,7 +49,7 @@ export default {
 
     methods: {
         getCarts() {
-            return this.$store.getters.getCartsFromRoute(this.routeDetails.route)
+            return this.$store.getters.getCartsInRoute(this.routeDetails.route)
         }
     }
 }

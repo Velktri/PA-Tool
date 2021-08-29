@@ -15,11 +15,6 @@ export default {
             type: Object
         },
 
-        id: {
-            required: true,
-            type: Number
-        },
-
         isSelected: {
             required: true,
             type: Boolean
@@ -29,17 +24,17 @@ export default {
     computed: {
         activeComponent() {
             let isRouteType = this.$store.getters.getSelectedListType
-            if (isRouteType === 'routes') {
-                return RouteList
-            }
-
-            return StationList
+            return (isRouteType === 'routes') ? RouteList : StationList
         }
     },
 
     methods: {
         selectRoute() {
-            this.$emit('listClicked', { 'id': this.id, 'station': this.contentData.station })
+            this.$store.commit('setSelectedStationPair', { 'stationPair': this.contentData.station })
+            
+            if (this.contentData.routeData.length > 0) {
+                this.$store.commit('setSelectedRouteID', { 'routeID': this.contentData.routeData[0].route })
+            }
         }
     }
 }
