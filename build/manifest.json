@@ -1,13 +1,18 @@
 {
     "manifest_version": 2,
     "name": "stationTracker",
-    "version": "0.1",
+    "version": "1.0.01",
     "description": "",
     "background": {
         "scripts": ["background.js"]
     },
     "browser_action": {
         "default_title": "stationTracker"
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "update_url": "https://velktri.github.io/addon-dl/StationTracker/updates.json"
+        }
     },
     "permissions": [
         "tabs",

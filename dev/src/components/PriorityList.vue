@@ -84,25 +84,7 @@ export default {
             })
 
             return sortedRoutes
-        },
-
-        setInitRoute() {
-            let waves = this.$store.getters.getAllWaveTimes
-            for (let i = 0; i < waves.length; i++) {
-                let routes = this.$store.getters.getFilteredInProgressRoutesFromWave(waves[i])
-                if (routes.length > 0) {
-                    this.$store.commit('setSelectedRouteID', { 'routeID': routes[0].route })
-                    this.$store.commit('setSelectedStationPair', { 'stationPair': routes[0].station })
-                    break;
-                }
-            }
         }
-
-    },
-
-    
-    mounted() {
-        this.setInitRoute()
     }
 }
 </script>

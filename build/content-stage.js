@@ -11,7 +11,7 @@ function readTable(waveData)
             let rowData = extractRowData(rows[i])
             if (waveData[rowData.route] === undefined)
             {
-                waveData[rowData.route] = { 'waveTime': rowData.stageTime, carts: [] }
+                waveData[rowData.route] = { 'waveTime': rowData.stageTime, 'loc': rowData.loc, carts: [] }
             }
 
             waveData[rowData.route].carts.push({ cartName: rowData.cartName, status: rowData.status, dwellTime: rowData.dwellTime })
@@ -29,24 +29,24 @@ function extractRowData(rowData)
     let stageTime = alignStageTime(children[2].children[0].innerHTML)
     let route = children[1].children[0].textContent
     let dwellTime = children[5].children[0].innerHTML
+    let loc = children[3].children[0].innerHTML
 
     let status = children[4].children[0].textContent.trim()
     if (status.slice(0, 3) === "Not") { status = "Not Ready" }
 
-    return { route, stageTime, cartName, status, dwellTime }
+    return { route, loc, stageTime, cartName, status, dwellTime }
 }
 
 function alignStageTime(stageTime)
 {
-    let newStageTime = stageTime
     let stageSplit = stageTime.split(':')
-
     if (stageSplit[1] !== '20' && stageSplit[1] !== '50')
     {
-        newStageTime = stageSplit[0] + ':' + (parseInt(stageSplit[1]) + 15)
+        stageTime = stageSplit[0] + ':' + (parseInt(stageSplit[1]) + 15)
     }
-
-    return newStageTime
+    
+    stageSplit = stageTime.split(':')
+    return stageSplit[0] + ':' + (parseInt(stageSplit[1]) - 5)
 }
 
 function getNextButton()

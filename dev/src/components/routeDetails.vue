@@ -1,16 +1,22 @@
 <template>
     <div v-if="routeDetails !== undefined" class="card">
         <header class="card-header">
-            <div class="level st-fill-width">
-                <div class="card-header-title st-title-font level-left">
-                    {{ routeDetails.route }}
+            <div class="columns st-fill-width card-header-title is-centered">
+                <div class="column st-title-font is-narrow">
+                    {{ stageLoc(routeDetails.route) }}
                 </div>
 
-                <div class="card-header-title st-title-font level-right columns">
-                    <div class="columm">
-                        <div>{{ routeDetails.progress }}</div>
-                        <div>{{ progressPercent }}</div>
+                <div class=" st-title-font has-text-centered column auto">
+                    <div>
+                        {{ routeDetails.route }}
                     </div>
+                </div>
+
+                <div v-if="routeDetails.status === 'In Progress'" class="st-title-font column is-narrow">
+                    <div> {{ routeDetails.progress }} </div>
+                </div>
+                <div v-else :class="statusMap[routeDetails.status]" class="st-route-tag tag st-title-font column is-narrow">
+                        <div> {{ routeDetails.status }}</div>
                 </div>
             </div>
         </header>
@@ -40,6 +46,15 @@ export default {
         }
     },
 
+    data() {
+        return {
+            statusMap: {
+                'Picked': 'is-success',
+                'Route Cut': 'is-warning',
+            },
+        }
+    },
+
     computed: {
         progressPercent() {
             let split = this.routeDetails.progress.split('/')
@@ -48,6 +63,18 @@ export default {
     },
 
     methods: {
+        stageLoc(route) {
+            let loc = this.$store.getters.getStageLocationFromRoute(route)
+            if (loc !== '') {
+                let locSplit  = loc.split('.')
+                if (locSplit[0] === 'STG') {
+                    return locSplit[1]
+                }
+            }
+
+            return 'N/A'
+        },
+
         getCarts() {
             return this.$store.getters.getCartsInRoute(this.routeDetails.route)
         }
@@ -65,5 +92,19 @@ export default {
 }
 .st-fill-width {
     width: 100%;
+}
+$padding-y: calc(1rem - 1px);
+$padding-x: .5rem;
+
+.st-route-tag {
+    border-radius: .4em;
+    border: 1px solid transparent;
+    padding-bottom: $padding-y;
+    padding-left: $padding-x;
+    padding-right: $padding-x;
+    padding-top: $padding-y;
+    user-select:none;
+    font-size: .85rem;
+    margin-right: .5rem;
 }
 </style>

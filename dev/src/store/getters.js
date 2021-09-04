@@ -119,6 +119,14 @@ const getters = {
 
     getMaxStations: state => {
         return state.maxStationAmount
+    },
+
+    getStageLocationFromRoute: state => route => {
+        if (state.cartData[route] !== undefined) {
+            return state.cartData[route].loc
+        }
+
+        return ''
     }
     
 }

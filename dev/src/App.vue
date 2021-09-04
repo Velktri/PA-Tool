@@ -68,7 +68,7 @@ import Sidebar from "./components/Sidebar.vue"
 import PriorityList from "./components/PriorityList.vue"
 import StationDetailsContainer from "./components/StationDetailsContainer.vue"
 import RangeSlider from "./components/Utils/RangeSlider.vue"
-//import { _pickData, _stageData } from './api/test.js'
+import { _pickData, _stageData } from './api/test.js'
 
 export default {
     name: "App",
@@ -114,10 +114,10 @@ export default {
     },
 
     async created() {
-        /*if (process.env.NODE_ENV == 'development') {
+        if (process.env.NODE_ENV == 'development') {
             this.$store.dispatch('processPickData', _pickData)
             this.$store.dispatch('processCartData', _stageData)
-        } else {*/
+        } else {
             browser.runtime.onMessage.addListener((res) => {
                 if (res.command === 'ST_STATION_DATA_UPDATED') {
                     this.processStationData()
@@ -127,7 +127,7 @@ export default {
                     this.processCartData()
                 }
             })
-        //}
+        }
     },
 }
 </script>

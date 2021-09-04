@@ -1,18 +1,25 @@
 <template>
     <div class="columns st-fw">
-        <div class="column">
-            <span class="st-pr">{{ contentData.route }}</span>
-            <span class="icon-text">
-                <span class="icon has-text-info">
-                    <i class="fas fa-building"></i>
-                </span>
-                <span class="st-pr">{{ contentData.station }}</span>
-            </span>
+        <div class="column is-3">
+            <div class="columns is-gapless">
+                <div class="column is-3">
+                    <div class="st-fw">{{ contentData.route }}</div>
+                </div>
+                <div class="column auto"></div>
+                <div class="column is-4">
+                    <span class="icon-text">
+                        <span class="icon has-text-info">
+                            <i class="fas fa-building"></i>
+                        </span>
+                        <span class="st-pr">{{ contentData.station }}</span>
+                    </span>
+                </div>
+            </div>
         </div>
         <div class="column auto"></div>
         <div class="column is-6">
-            <div class="columns is-gapless">
-                <progress class="progress is-success column is-7 st-mt" :value="contentData.percent" max="100">{{ contentData.percent }}</progress>
+            <div class="columns is-gapless is-vcentered">
+                <progress class="progress is-success column is-7" :value="contentData.percent" max="100">{{ contentData.percent }}</progress>
                 <div class="column">{{ contentData.percent }}%</div>
                 <div class="icon-text column">
                     <span class="icon has-text-success">

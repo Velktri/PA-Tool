@@ -1,7 +1,7 @@
 const _pickData = {
     "P03": [
         {
-          "route": "CX127",
+          "route": "CX1",
           "status": "Route Cut",
           "progress": "218/220"
         },
@@ -26,7 +26,7 @@ const _pickData = {
           "progress": "256/282"
         },
         {
-          "route": "CX333",
+          "route": "CX3",
           "status": "In Progress",
           "progress": "114/194"
         },
@@ -63,7 +63,7 @@ const _pickData = {
           "progress": "244/249"
         },
         {
-          "route": "CX291",
+          "route": "CX2",
           "status": "In Progress",
           "progress": "275/279"
         },
@@ -730,7 +730,7 @@ const _pickData = {
 }
 
 const _stageData = {
-    "CX127": {
+    "CX1": {
         "waveTime": "08:50",
         "carts": [
           {
@@ -3050,7 +3050,7 @@ const _stageData = {
           }
         ]
       },
-      "CX333": {
+      "CX3": {
         "waveTime": "11:20",
         "carts": [
           {
@@ -3320,7 +3320,7 @@ const _stageData = {
           }
         ]
       },
-      "CX291": {
+      "CX2": {
         "waveTime": "10:50",
         "carts": [
           {

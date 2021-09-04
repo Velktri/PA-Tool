@@ -6,7 +6,7 @@
             </div>
 
             <div class="level-right">
-                <div class="tag" v-bind:class="statusMap[cartData.status]">{{ cartData.status }}</div>
+                <div class="tag" :class="statusMap[cartData.status]">{{ cartData.status }}</div>
             </div>
         </div>
     </div>
