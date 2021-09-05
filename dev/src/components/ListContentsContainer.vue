@@ -34,7 +34,10 @@ export default {
             if (this.contentData.route !== undefined) {
                 this.$store.commit('setSelectedRouteID', { 'routeID': this.contentData.route })
             } else {
-                this.$store.commit('setSelectedRouteID', { 'routeID': this.$store.getters.getInProgressRouteFromStation(this.contentData.station) })
+                let routeID = this.$store.getters.getInProgressRouteFromStation(this.contentData.station)
+                if (routeID !== '') {
+                    this.$store.commit('setSelectedRouteID', { 'routeID': routeID })
+                }
             }
         }
     }

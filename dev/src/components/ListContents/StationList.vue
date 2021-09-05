@@ -1,6 +1,6 @@
 <template>
     <div class="columns is-gapless st-fw">
-        <div class="column is-2">
+        <div class="column is-1">
             <div class="st-p-r">{{ contentData.station }}</div>
         </div>
 
@@ -19,17 +19,26 @@
             </div>
         </div>
 
-        <div class="column is-2">
-            <div v-if="contentData.routeData.length < 2">
-                <span class="icon has-text-danger">
-                    <i class="fas fa-info-circle"></i>
-                </span>
+        <div class="column is-1">
+            <div class="columns">
+                <div class="column">
+                    <span v-if="checkCartStatus(contentData.station)" class="icon has-text-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </span>
+                    <span v-else></span>
+                </div>
+                <div v-if="contentData.routeData.length < 2" class="column">
+                    <span class="icon has-text-danger">
+                        <i class="fas fa-info-circle"></i>
+                    </span>
+                </div>
+                <div v-else class="column">
+                    <span class="icon has-text-success">
+                        <i class="far fa-check-circle"></i>
+                    </span>
+                </div>
             </div>
-            <div v-else>
-                <span class="icon has-text-success">
-                    <i class="far fa-check-circle"></i>
-                </span>
-            </div>
+
         </div>
     </div>
 
@@ -52,6 +61,12 @@ export default {
             let split = this.contentData.progress.split('/')
             return split[1] - split[0]
         }
+    },
+
+    methods: {
+        checkCartStatus(station) {
+            return this.$store.getters.doesStationHaveReadyCarts(station)
+        }
     }
 }
 </script>
@@ -63,5 +78,6 @@ export default {
 
 .st-fw {
     width: 100%;
+    padding: 0rem .75rem;
 }
 </style>

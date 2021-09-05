@@ -12,7 +12,7 @@
         <div class="box">
             <div class="st-completed">
                 <div class="title is-1">Completed Routes</div>
-                <div class="columns completed-columns" v-for="i in Math.ceil(this.$store.getters.getRoutesFromStation.length / 3)" :key='i'>
+                <div class="columns completed-columns" v-for="i in Math.floor(this.$store.getters.getRoutesFromStation.length / 3)" :key='i'>
                     <div class="column is-one-third"
                         v-for="j in 3"
                         :key="j"

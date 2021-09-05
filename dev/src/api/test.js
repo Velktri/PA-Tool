@@ -3746,17 +3746,17 @@ const _stageData = {
           {
             "cartName": "CRT1-710-OPO",
             "status": "Staged",
-            "dwellTime": "..."
+            "dwellTime": "03:25"
           },
           {
             "cartName": "CRT1-580-NHF",
             "status": "Staged",
-            "dwellTime": "..."
+            "dwellTime": "03:30"
           },
           {
             "cartName": "CRT1-521-LBO",
             "status": "Staged",
-            "dwellTime": "..."
+            "dwellTime": "01:45"
           },
           {
             "cartName": "CRT1-699-HGT",

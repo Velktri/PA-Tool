@@ -1,11 +1,25 @@
 <template>
     <div class="st-cart-list">
-        <div class="level">
-            <div class="level-left">
-                <span>{{ cartData.cartName }}</span>
+        <div class="columns is-gapless">
+            <div class="column is-narrow">
+                {{ cartData.cartName }}
             </div>
 
-            <div class="level-right">
+            <div class="column">
+                <div class="columns is-justify-content-flex-end">
+                    <div class="column">
+
+                    </div>
+                    <div class="column is-narrow">
+                        <div class="title is-6">
+                            {{ formatedDwellTime }}
+                        </div>
+                    </div>
+                    <div class="column is-2"></div>
+                </div>
+            </div>
+
+            <div class="column is-narrow">
                 <div class="tag" :class="statusMap[cartData.status]">{{ cartData.status }}</div>
             </div>
         </div>
@@ -31,6 +45,12 @@ export default {
             },
         }
     },
+
+    computed: {
+        formatedDwellTime() {
+            return (this.cartData.dwellTime !== '...') ? this.cartData.dwellTime : ''
+        }
+    }
 }
 </script>
 

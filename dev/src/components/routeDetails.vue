@@ -65,7 +65,7 @@ export default {
     methods: {
         stageLoc(route) {
             let loc = this.$store.getters.getStageLocationFromRoute(route)
-            if (loc !== '') {
+            if (loc !== '' && loc !== undefined) {
                 let locSplit  = loc.split('.')
                 if (locSplit[0] === 'STG') {
                     return locSplit[1]
@@ -73,6 +73,10 @@ export default {
             }
 
             return 'N/A'
+        },
+    
+        setDwellTime(route) {
+            return this.$store.getters.getShortestDwellTimeFromRoute(route)
         },
 
         getCarts() {

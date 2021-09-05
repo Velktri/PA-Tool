@@ -1,3 +1,13 @@
+function handleRemoved(tabID)
+{
+    browser.storage.local.get("ST_UI").then(res => {
+        if (tabID === res.ST_UI)
+        {
+            browser.storage.local.set({ ST_UI: browser.tabs.TAB_ID_NONE })
+        }
+    })
+}
+
 function LoadContentTabs()
 {
     browser.windows.create({
@@ -90,12 +100,21 @@ function handleBrowserClicked()
 {
     LoadContentTabs()
 
-    /* Create or focus sally dashboard tab */
+    /* Create or focus UI dashboard tab */
     browser.storage.local.get('ST_UI').then(res => {
         if (res.ST_UI === undefined || res.ST_UI === browser.tabs.TAB_ID_NONE)
         {
-            browser.tabs.create({ url: 'UI/index.html' }).then((tab) => {
-                browser.storage.local.set({ ST_UI: tab.id })
+            // check and close all old ST tabs
+            browser.tabs.query({ url: "moz-extension://c9c3f99b-2b80-4696-a9ee-97f5da13e813/*"}).then(tabs => {
+                tabs.forEach(tab => {
+                    browser.tabs.remove(tab.id)
+                })
+                return Promise.resolve()
+            }).then(() => {
+                // create new UI tab
+                browser.tabs.create({ url: 'UI/index.html' }).then((tab) => {
+                    browser.storage.local.set({ ST_UI: tab.id })
+                })
             })
         }
         else
@@ -107,6 +126,7 @@ function handleBrowserClicked()
 
 
 /* Listeners */
+browser.tabs.onRemoved.addListener(handleRemoved)
 browser.browserAction.onClicked.addListener(handleBrowserClicked)
 browser.runtime.onMessage.addListener(handleMessages)
 

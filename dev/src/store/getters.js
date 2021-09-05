@@ -49,8 +49,12 @@ const getters = {
                 return routeData.status === 'In Progress'
             })
 
-            return routeObj.route
+            if (routeObj !== undefined) {
+                return routeObj.route
+            }
         }
+
+        return ''
     },
 
     getCartsInRoute: state => routeCode => {
@@ -127,8 +131,49 @@ const getters = {
         }
 
         return ''
-    }
+    },
+
+    getShortestDwellTimeFromRoute: state => route => {
+        if (state.cartData[route] !== undefined) {
+            let dwellTimes = state.cartData[route].carts.filter(cart => cart.dwellTime !== '...').map(cart => cart.dwellTime)
+
+            if (dwellTimes.length > 0) {
+                dwellTimes.sort((x, y) => {
+                    let xTime = { 'minutes': parseInt(x.split(':')[0]), 'seconds': parseInt(x.split(':')[1]) }
+                    let yTime = { 'minutes': parseInt(y.split(':')[0]), 'seconds': parseInt(y.split(':')[1]) }
     
+                    if (xTime.minutes > yTime.minutes) { return 1 }
+                    if (xTime.minutes < yTime.minutes) { return -1 }
+    
+                    if (xTime.minutes === yTime.minutes) {
+                        if (xTime.seconds > yTime.seconds) { return 1 }
+                        if (xTime.seconds < yTime.seconds) { return -1 }
+                    }
+    
+                    return 0
+                })
+    
+                return dwellTimes[0]
+            }
+        }
+
+        return ''
+    },
+
+    doesStationHaveReadyCarts: state => station => {
+        if (state.stationPairData[station] !== undefined) {
+            for (let i = 0; i < state.stationPairData[station].length; i++) {
+                let routeObj = state.stationPairData[station][i]
+                if (state.cartData[routeObj.route] !== undefined) {
+                    if (state.cartData[routeObj.route].carts.find(cart => cart.status === 'Ready') !== undefined) {
+                        return true
+                    }
+                }
+            }
+        }
+        
+        return false
+    }
 }
 
 export default getters
