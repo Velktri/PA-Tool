@@ -12,7 +12,7 @@
                     </div>
                     <div class="column is-narrow">
                         <div class="title is-6">
-                            {{ formatedDwellTime }}
+                            <b>{{ formatedDwellTime }}</b>
                         </div>
                     </div>
                     <div class="column is-2"></div>
@@ -48,7 +48,7 @@ export default {
 
     computed: {
         formatedDwellTime() {
-            return (this.cartData.dwellTime !== '...') ? this.cartData.dwellTime : ''
+            return (this.cartData.status === 'Ready') ? this.cartData.dwellTime : ''
         }
     }
 }
