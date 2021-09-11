@@ -135,7 +135,9 @@ const getters = {
 
     getShortestDwellTimeFromRoute: state => route => {
         if (state.cartData[route] !== undefined) {
-            let dwellTimes = state.cartData[route].carts.filter(cart => cart.dwellTime !== '...').map(cart => cart.dwellTime)
+            let dwellTimes = state.cartData[route].carts.filter(cart => {
+                return cart.status === 'Ready'
+            }).map(cart => cart.dwellTime)
 
             if (dwellTimes.length > 0) {
                 dwellTimes.sort((x, y) => {
@@ -160,6 +162,23 @@ const getters = {
         return ''
     },
 
+    getReadyRoutesFromStation: state => station => {
+        let readyroutes = []
+
+        if (state.stationPairData[station] !== undefined) {
+            for (let i = 0; i < state.stationPairData[station].length; i++) {
+                let routeObj = state.stationPairData[station][i]
+                if (state.cartData[routeObj.route] !== undefined) {
+                    if (state.cartData[routeObj.route].carts.find(cart => cart.status === 'Ready') !== undefined) {
+                        readyroutes.push(routeObj.route)
+                    }
+                }
+            }
+        }
+
+        return readyroutes
+    },
+
     doesStationHaveReadyCarts: state => station => {
         if (state.stationPairData[station] !== undefined) {
             for (let i = 0; i < state.stationPairData[station].length; i++) {
@@ -173,6 +192,16 @@ const getters = {
         }
         
         return false
+    },
+
+    doesRouteHaveReadyCarts: state => route => {
+        if (state.cartData[route] !== undefined) {
+            let found = state.cartData[route].carts.find(cart => {
+                return cart.status === 'Ready'
+            })
+
+            return found !== undefined
+        }
     }
 }
 

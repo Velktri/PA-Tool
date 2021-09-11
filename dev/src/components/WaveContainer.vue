@@ -1,7 +1,14 @@
 <template>
     <div v-if="isWaveEmpty(waveTime.wave)">
         <div class="title is-3 st-mb st-mt">
-            {{ waveTitle(waveTime.index) }}
+            <div class="level st-px">
+                <div class="level-left">
+                    {{ waveTitle(waveTime.index) }}
+                </div>
+                <div class="level-right">
+                    {{ timeRemaining(waveTime.index) }}
+                </div>
+            </div>
         </div>
         <RouteListContainer v-for='(route, j) in getRouteDataFromWave(waveTime.wave)'
                             :key='j'
@@ -36,9 +43,7 @@ export default {
     methods: {
         waveTitle(id) {
             if (this.$store.getters.getWaveTimeByID(id)) {
-                return  'Wave ' + id + 
-                        ' - (' + this.$store.getters.getWaveTimeByID(id) + ') - ' + 
-                        this.timeRemaining(id) + ' Minutes Left'
+                return  'Wave ' + id + ' - (' + this.$store.getters.getWaveTimeByID(id) + ')'
             }
 
             return ''
@@ -57,7 +62,8 @@ export default {
             let minDiff = waveTime.minute - curTime.minute
 
 
-            return (hourDiff * 60) + minDiff
+            let remainingTime = (hourDiff * 60) + minDiff
+            return (remainingTime >= 0) ? remainingTime  + ' Minutes Left' : (remainingTime * -1) + ' Minutes Past'
         },
         
         isWaveEmpty(wave) {
@@ -94,5 +100,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.st-px {
+    padding: 0rem 0.5rem;
+}
 </style>

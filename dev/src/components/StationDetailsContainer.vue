@@ -46,9 +46,19 @@ export default {
         getCompletedRoutes() {
             let routes = this.$store.getters.getRoutesFromStation
             if (routes !== undefined) {
-                return routes.filter(route => {
+                routes = routes.filter(route => {
                     return route.status !== 'In Progress'
                 })
+
+
+                routes.sort((x, y) => {
+                    if (!this.$store.getters.doesRouteHaveReadyCarts(x.route) &&
+                        this.$store.getters.doesRouteHaveReadyCarts(y.route)) { return 1 }
+
+                    return 0
+                })
+
+                return routes
             }
         },
 
@@ -95,7 +105,6 @@ export default {
 }
 
 .st-station-details {
-    //background-color: $foreground-color;
     height: $content-height;
 
 }

@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "stationTracker",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "",
     "background": {
         "scripts": ["background.js"]

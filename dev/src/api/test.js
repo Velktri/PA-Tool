@@ -960,8 +960,8 @@ const _stageData = {
           },
           {
             "cartName": "CRT1-534-FQE",
-            "status": "Staged",
-            "dwellTime": "..."
+            "status": "Ready",
+            "dwellTime": "3:42"
           }
         ]
       },
@@ -1335,8 +1335,8 @@ const _stageData = {
           },
           {
             "cartName": "CRT1-842-UFT",
-            "status": "Staged",
-            "dwellTime": "..."
+            "status": "Ready",
+            "dwellTime": "00:48"
           }
         ]
       },
@@ -1450,8 +1450,8 @@ const _stageData = {
         "carts": [
           {
             "cartName": "CRT1-945-QVO",
-            "status": "Staged",
-            "dwellTime": "..."
+            "status": "Ready",
+            "dwellTime": "06:23"
           },
           {
             "cartName": "CRT1-268-GRE",
