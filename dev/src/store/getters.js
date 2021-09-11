@@ -69,6 +69,17 @@ const getters = {
         return []
     },
 
+    getCompletedRoutesFromStationAmount: state => {
+        if (state.stationPairData[state.selectedStationPair] !== undefined) {
+            let completedRoutes = state.stationPairData[state.selectedStationPair].filter(route => {
+                return route.status !== 'In Progress'
+            })
+            return completedRoutes.length
+        }
+
+        return 0
+    },
+
     getSelectedStationPair: state => {
         return state.selectedStationPair
     },
