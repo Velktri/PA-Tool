@@ -105,7 +105,7 @@ function handleBrowserClicked()
         if (res.ST_UI === undefined || res.ST_UI === browser.tabs.TAB_ID_NONE)
         {
             // check and close all old ST tabs
-            browser.tabs.query({ url: "moz-extension://c9c3f99b-2b80-4696-a9ee-97f5da13e813/*"}).then(tabs => {
+            browser.tabs.query({ url: "moz-extension://ecf056b9-e569-40a2-809e-c5b6865cf141/*"}).then(tabs => {
                 tabs.forEach(tab => {
                     browser.tabs.remove(tab.id)
                 })
