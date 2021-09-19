@@ -1,5 +1,5 @@
 <template>
-    <div v-if="routeDetails !== undefined" class="card">
+    <div v-if="routeDetails !== undefined" class="card mt-2">
         <header class="card-header">
             <div class="columns st-fill-width card-header-title is-centered">
                 <div class="column st-title-font is-narrow">
@@ -87,6 +87,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.card {
+    max-width: 99%;
+}
+
 .card-content {
     padding: 0.55rem 0.6rem;
 }

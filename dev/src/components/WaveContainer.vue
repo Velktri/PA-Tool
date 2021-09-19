@@ -15,6 +15,7 @@
                             :id='j'
                             :isSelected='route.route === selectedRoute'
                             :contentData='route'
+                            :listType='"routes"'
         />
     </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-    <div class="columns is-gapless st-fw">
+    <div v-if='contentData.routeData !== undefined' class="columns is-gapless st-fw">
         <div class="column is-1">
             <div class="st-p-r">{{ contentData.station }}</div>
         </div>

@@ -10,7 +10,6 @@ export default createStore({
         selectedStationPair: 'P01',
         selectedRouteID: '',
         selectedRouteFilterType: 'percentage',
-        selectedListType: 'routes',
 
         maxStationAmount: -1,
         

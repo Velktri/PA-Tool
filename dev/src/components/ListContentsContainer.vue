@@ -18,13 +18,17 @@ export default {
         isSelected: {
             required: true,
             type: Boolean
+        },
+
+        listType: {
+            required: true,
+            type: String
         }
     },
 
     computed: {
         activeComponent() {
-            let isRouteType = this.$store.getters.getSelectedListType
-            return (isRouteType === 'routes') ? RouteList : StationList
+            return (this.listType === 'routes') ? RouteList : StationList
         }
     },
 

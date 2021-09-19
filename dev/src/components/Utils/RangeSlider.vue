@@ -61,7 +61,7 @@ export default {
 <style lang="scss" scoped>
 .num-offset {
     margin-top: .5rem;
-    margin-left: .5rem !important;
+    margin-left: 1.5rem !important;
 }
 
 .range-slider {

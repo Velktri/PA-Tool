@@ -14,9 +14,6 @@ const mutations = {
     setSelectedRouteFilter(state, filter) {
         state.selectedRouteFilterType = filter
     },
-    setSelectedListType(state, type) {
-        state.selectedListType = type
-    },
 
     setMinFilterRange(state, payload) {
         state.minFilterRange = payload.range

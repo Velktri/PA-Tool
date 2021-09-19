@@ -1,28 +1,20 @@
 <template>
-    <div class="st-station-details">
-        <div class="box st-progress">
-            <div class="title is-1">In Progress</div>
-            <div class="columns">
-                <div class="column is-half" v-for="(routeData, i) in getInProgressRoutes()" :key='i'>
+    <div class="box">
+        <div class="st-list-container">
+            <div class="st-station-details">
+                <div class="title is-1 st-mb">In Progress</div>
+                <div v-for="(routeData, i) in getInProgressRoutes()" :key='i'>
                     <RouteDetails :routeDetails="routeData" />
                 </div>
-            </div>
-        </div>
 
-        <div class="box">
-            <div class="st-completed">
-                <div class="title is-1">Completed Routes</div>
-                <div class="columns completed-columns" v-for="i in Math.ceil(this.$store.getters.getCompletedRoutesFromStationAmount / 3)" :key='i'>
-                    <div class="column is-one-third"
-                        v-for="j in 3"
-                        :key="j"
-                    >
-                        <RouteDetails :routeDetails="getCompletedRoutes()[(j + ((i - 1) * 3) - 1)]" />
-                    </div>
+                <div class="title is-1 st-mt st-mb">Completed Routes</div>
+                <div v-for="(route, i) in getCompletedRoutes()" :key='i'>
+                    <RouteDetails :routeDetails="route" />
                 </div>
             </div>
         </div>
     </div>
+
 </template>
 
 <script>
@@ -84,10 +76,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.st-completed {
+
+.st-list-container {
+    padding: 0.5rem;
     scrollbar-width: thin;
-    overflow: auto;
-    height: calc(#{$content-height} - #{$progress-height} - 5rem);
+    height: calc(#{$content-height} - 3.5rem);
+    overflow:auto;
 }
 
 .test2 {
@@ -95,12 +89,12 @@ export default {
     overflow: auto;
 }
 
-.st-progress {
-    height: $progress-height;
+.st-mb {
+    margin-bottom: .5rem !important;
 }
 
-.completed-columns {
-    margin: -0.75rem 0;
+.st-mt {
+    margin-top: 1rem;
 }
 
 .st-station-details {

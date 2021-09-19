@@ -6,13 +6,17 @@
                     <div class="st-fw">{{ contentData.route }}</div>
                 </div>
                 <div class="column auto"></div>
-                <div class="column is-4">
-                    <span class="icon-text">
-                        <span class="icon has-text-info">
-                            <i class="fas fa-building"></i>
-                        </span>
-                        <span class="st-pr">{{ contentData.station }}</span>
-                    </span>
+                <div class="column is-5">
+                    <div class="columns is-gapless is-vcentered">
+                        <div class="icon column is-6">
+                            <span class="icon has-text-info">
+                                <i class="fas fa-building"></i>
+                            </span>
+                        </div>
+                        <div class="column">
+                            <span>{{ contentData.station }}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -43,8 +47,12 @@ export default {
 
     computed: {
         remainingPackages() {
-            let split = this.contentData.progress.split('/')
-            return split[1] - split[0]
+            if (this.contentData !== undefined && this.contentData.progress !== undefined) {
+                let split = this.contentData.progress.split('/')
+                return split[1] - split[0]
+            }
+
+            return 0
         },
 
         barColor() {
@@ -60,7 +68,7 @@ export default {
 }
 
 .st-pr {
-    padding-right: 1.5rem;
+    padding-right: 2.5rem;
 }
 
 .st-mt {

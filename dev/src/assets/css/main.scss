@@ -1,17 +1,11 @@
 // Customizations Here (Optional)
-$overview-height: calc(calc(70px * 1.5));
-$progress-height: calc(276px + 2.5rem);
-$content-height: calc(100vh  - #{$overview-height} - 1.25rem);
-$test-color: rgb(78, 110, 78);
-//$column-gap: 1px;
+$overview-height: 76px;
+$content-height: calc(100vh - calc(#{$overview-height} + .5rem));
 
 
 $foreground-color: #343c3d;
 $bg-color: #1f2424;
 $green-color: #2ecc71;
-
-//$foreground-color: #2e2b3f;
-//$background-color: #221f2e;
 
 #app {
     min-height: 100vh
@@ -21,6 +15,7 @@ html {
     height: 100vh;
     scrollbar-color: #4c5759 #343c3d;
     scrollbar-width: thin;
+    overflow: hidden;
 }
 
 body {

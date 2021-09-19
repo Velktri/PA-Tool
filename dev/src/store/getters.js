@@ -92,10 +92,6 @@ const getters = {
         return state.selectedRouteFilterType
     },
 
-    getSelectedListType: state => {
-        return state.selectedListType
-    },
-
     getMinFilterRange: state => {
         return state.minFilterRange
     },
