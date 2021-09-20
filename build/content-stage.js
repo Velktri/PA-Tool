@@ -116,17 +116,40 @@ function injectModal()
 
     let styles = `
         .modal-content { 
-            background-color: #b30000;
-        }`
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #000;
+            border-radius: 1rem;
+            width: 80%;
+        }
+        .modal {
+            position: fixed;
+            z-index: 1;
+            padding-top: 50vh;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(130,0,0);
+            background-color: rgba(130,0,0,0.8);
+        }
+        `
 
     let modalStyle = document.createElement("style")
     modalStyle.type = "text/css"
     modalStyle.innerText = styles
     document.head.appendChild(modalStyle)
 
-    modal.innerHTML = `<div class="modal-content">
-                            <p>Some text in the Modal..</p>
-                        </div>`
+    modal.innerHTML = `
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <p>This tab is being used by the Station Tracker addon. Closing it will result in errors. </p>
+            <p>Only close this window if you're are sure you don't need to use Station Tracker anymore.</p>
+        </div>
+    </div>`
+
     bod.appendChild(modal)
 }
 
@@ -144,7 +167,7 @@ function callback(mutations, observer)
 
 if (window.location.hash === '#/stage')
 {
-    console.log("Content script for Stage is loaded.")
+    console.log("Stage content script loaded.")
 
     injectModal()
 
