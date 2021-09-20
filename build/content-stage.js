@@ -103,27 +103,50 @@ function extractDataFromPages()
     return data
 }
 
-function compileData(observer)
+function compileData()
 {
-    if (observer !== undefined) { observer.disconnect() }
     resetToFirstPage()
     return extractDataFromPages()
+}
+
+function injectModal() 
+{
+    let bod = document.body
+    let modal = document.createElement('div')
+
+    let styles = `
+        .modal-content { 
+            background-color: #b30000;
+        }`
+
+    let modalStyle = document.createElement("style")
+    modalStyle.type = "text/css"
+    modalStyle.innerText = styles
+    document.head.appendChild(modalStyle)
+
+    modal.innerHTML = `<div class="modal-content">
+                            <p>Some text in the Modal..</p>
+                        </div>`
+    bod.appendChild(modal)
 }
 
 function callback(mutations, observer)
 {
     if (mutations[0].target.tagName === 'TBODY')
     {
-        compileData(observer)
-        setTimeout(function() {
-            browser.runtime.sendMessage({ command: 'ST_STAGE_DATA', data: compileData(observer) })
-        }, 500)
+        if (observer !== undefined) { observer.disconnect() }
+        browser.runtime.sendMessage({ command: 'ST_STAGE_DATA', data: compileData() })
+        setInterval(function() {
+            browser.runtime.sendMessage({ command: 'ST_STAGE_DATA', data: compileData() })
+        }, 30000)
     }
 }
 
 if (window.location.hash === '#/stage')
 {
     console.log("Content script for Stage is loaded.")
+
+    injectModal()
 
     const observer = new MutationObserver(callback)
     observer.observe(document, { attributes: true, childList: true, subtree: true })

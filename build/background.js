@@ -6,6 +6,17 @@ function handleRemoved(tabID)
             browser.storage.local.set({ ST_UI: browser.tabs.TAB_ID_NONE })
         }
     })
+
+
+    browser.storage.local.get("ST_CONTENT_TABS").then(res => {
+        res.ST_CONTENT_TABS.forEach((tab, i) => {
+            if (tabID === tab) {
+                let updatedTabArray = res.ST_CONTENT_TABS
+                updatedTabArray[i] = browser.tabs.TAB_ID_NONE
+                browser.storage.local.set({ ST_CONTENT_TABS: updatedTabArray })
+            }
+        })
+    })
 }
 
 function LoadContentTabs()
@@ -22,14 +33,13 @@ function LoadContentTabs()
                 state: "minimized"
             }
         )
-
-        browser.storage.local.set({ ST_CONTENT_TABS: windowInfo.tabs })
+        browser.storage.local.set({ ST_CONTENT_TABS: windowInfo.tabs.map(tab => tab.id) })
     })
 }
 
 function storeData(data, tabIndex)
 {
-    /* Close content tab */
+    /* Close content tab 
     browser.storage.local.get("ST_CONTENT_TABS").then((result) => {
         if (result.ST_CONTENT_TABS[tabIndex].id !== browser.tabs.TAB_ID_NONE)
         {
@@ -37,7 +47,7 @@ function storeData(data, tabIndex)
             result.ST_CONTENT_TABS[tabIndex] = browser.tabs.TAB_ID_NONE
             browser.storage.local.set({ ST_CONTENT_TABS: result.ST_CONTENT_TABS })
         }
-    })
+    })*/
 
     /* Store content data */
     if (tabIndex === 0)
@@ -81,7 +91,7 @@ function handleMessages(request, sender, sendResponse)
 
             for (let i = 0; i < contentTabs.length; i++)
             {
-                if (sender.tab.id === contentTabs[i].id)
+                if (sender.tab.id === contentTabs[i])
                 {
                     browser.tabs.executeScript(
                         sender.tab.id,
@@ -98,8 +108,6 @@ function handleMessages(request, sender, sendResponse)
 
 function handleBrowserClicked()
 {
-    LoadContentTabs()
-
     /* Create or focus UI dashboard tab */
     browser.storage.local.get('ST_UI').then(res => {
         if (res.ST_UI === undefined || res.ST_UI === browser.tabs.TAB_ID_NONE)
@@ -122,6 +130,31 @@ function handleBrowserClicked()
             browser.tabs.update(res.ST_UI, { active: true })
         }
     })
+
+    browser.storage.local.get("ST_CONTENT_TABS").then(res => {
+        if (res.ST_CONTENT_TABS[0] === browser.tabs.TAB_ID_NONE &&
+            res.ST_CONTENT_TABS[1] === browser.tabs.TAB_ID_NONE) 
+        {
+            LoadContentTabs()
+        }
+        else if (res.ST_CONTENT_TABS[0] !== browser.tabs.TAB_ID_NONE &&
+                 res.ST_CONTENT_TABS[1] !== browser.tabs.TAB_ID_NONE)
+        {
+            // do nothing
+        }
+        else
+        {
+            /* Close content tab */
+            res.ST_CONTENT_TABS.forEach(tab => {
+                if (tab !== browser.tabs.TAB_ID_NONE)
+                {
+                    browser.tabs.remove(tab)
+                }
+            })
+
+            LoadContentTabs()
+        }
+    })
 }
 
 
@@ -135,4 +168,4 @@ browser.runtime.onMessage.addListener(handleMessages)
 browser.storage.local.set({ ST_UI: browser.tabs.TAB_ID_NONE })
 browser.storage.local.set({ ST_CART_DATA: {} })
 browser.storage.local.set({ ST_STATION_PAIR_DATA: {} })
-browser.storage.local.set({ ST_CONTENT_TABS: [] })
+browser.storage.local.set({ ST_CONTENT_TABS: [browser.tabs.TAB_ID_NONE, browser.tabs.TAB_ID_NONE] })

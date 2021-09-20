@@ -87,9 +87,8 @@ function extractDataFromPages()
     return data
 }
 
-function compileData(pickObserver)
+function compileData()
 {
-    if (pickObserver !== undefined) { pickObserver.disconnect() }
     resetToFirstPage()
     return extractDataFromPages()
 }
@@ -98,9 +97,11 @@ function callback(mutations, pickObserver)
 {
     if (mutations[0].target.tagName === 'TBODY')
     {
-        setTimeout(function() {
-            browser.runtime.sendMessage({ command: 'ST_PICK_DATA', data: compileData(pickObserver) })
-        }, 500)
+        if (pickObserver !== undefined) { pickObserver.disconnect() }
+        browser.runtime.sendMessage({ command: 'ST_PICK_DATA', data: compileData() })
+        setInterval(function() {
+            browser.runtime.sendMessage({ command: 'ST_PICK_DATA', data: compileData() })
+        }, 30000)
     }
 }
 
